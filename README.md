@@ -9,12 +9,16 @@ Este é um projeto de uma api para um app de mimicas.
 Projeto desenvolvido com as seguintes tecnologias:
 
 - [.Net Core](https://dotnet.microsoft.com/)
+- [SQLite](https://www.sqlite.org/index.html)
 
 ## :construction_worker: Como rodar
 
 ``` bash
  # Clonar repositório
  $ git clone https://github.com/ricardorinco/mimicapi.git
+ 
+ # Rodar o migration
+ $ Update-Database
 ```
 
 ## :memo: License
