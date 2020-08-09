@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace Mimic.API
+namespace Mimic.WebApi
 {
     public class Program
     {
