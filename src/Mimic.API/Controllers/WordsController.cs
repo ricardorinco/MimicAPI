@@ -28,7 +28,12 @@ namespace Mimic.WebApi.Controllers
         [HttpGet]
         public IActionResult Get(int id)
         {
-            return Ok(mimicContext.Words.Where(x => x.Id == id));
+            var foundWord = mimicContext.Words.FirstOrDefault(x => x.Id == id);
+
+            if (foundWord == null)
+                return NotFound();
+
+            return Ok(foundWord);
         }
 
         [Route("")]
@@ -39,28 +44,37 @@ namespace Mimic.WebApi.Controllers
             mimicContext.Words.Add(word);
             mimicContext.SaveChanges();
 
-            return Ok();
+            return Created($"api/words/{word.Id}", word);
         }
 
         [Route("{id}")]
         [HttpPut]
         public IActionResult Update(int id, [FromBody] Word word)
         {
-            word.Id = id;
-            word.UpdatedAt = DateTime.Now;
-            mimicContext.Words.Update(word);
+            var foundWord = mimicContext.Words.FirstOrDefault(x => x.Id == id);
+
+            if (foundWord == null)
+                return NotFound();
+
+            foundWord.Id = id;
+            foundWord.UpdatedAt = DateTime.Now;
+            mimicContext.Words.Update(foundWord);
             mimicContext.SaveChanges();
 
-            return Ok();
+            return NoContent();
         }
 
         [Route("{id}")]
         [HttpDelete]
         public IActionResult Delete(int id)
         {
-            var word = mimicContext.Words.Find(id);
-            word.Active = false;
-            mimicContext.Remove(mimicContext.Words.Find(id));
+            var foundWord = mimicContext.Words.Find(id);
+            if (foundWord == null)
+                return NotFound();
+
+            foundWord.Active = false;
+            mimicContext.Words.Update(foundWord);
+            mimicContext.SaveChanges();
 
             return Ok();
         }

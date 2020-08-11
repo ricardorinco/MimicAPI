@@ -32,6 +32,7 @@ namespace Mimic.WebApi
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthorization();
+            app.UseStatusCodePages();
 
             app.UseEndpoints(endpoints =>
             {
