@@ -7,6 +7,7 @@ using System.Linq;
 namespace Mimic.WebApi.Controllers
 {
     [ApiController]
+    [Route("api/words")]
     public class WordsController : ControllerBase
     {
         private readonly MimicContext mimicContext;
@@ -32,7 +33,7 @@ namespace Mimic.WebApi.Controllers
 
         [Route("")]
         [HttpPost]
-        public IActionResult Add([FromBody]Word word)
+        public IActionResult Add([FromBody] Word word)
         {
             word.CreatedAt = DateTime.Now;
             mimicContext.Words.Add(word);
@@ -43,7 +44,7 @@ namespace Mimic.WebApi.Controllers
 
         [Route("{id}")]
         [HttpPut]
-        public IActionResult Update(int id, [FromBody]Word word)
+        public IActionResult Update(int id, [FromBody] Word word)
         {
             word.Id = id;
             word.UpdatedAt = DateTime.Now;
