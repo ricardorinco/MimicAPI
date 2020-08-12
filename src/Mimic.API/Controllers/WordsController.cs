@@ -17,15 +17,19 @@ namespace Mimic.WebApi.Controllers
             this.mimicContext = mimicContext;
         }
 
-        [Route("")]
         [HttpGet]
-        public IActionResult GetAll()
+        public IActionResult GetAll([FromQuery] DateTime? searchDate)
         {
-            return Ok(mimicContext.Words);
+            var words = mimicContext.Words.AsQueryable();
+            if (searchDate.HasValue)
+            {
+                words = words.Where(x => x.CreatedAt > searchDate);
+            }
+
+            return Ok(words);
         }
 
-        [Route("{id}")]
-        [HttpGet]
+        [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
             var foundWord = mimicContext.Words.FirstOrDefault(x => x.Id == id);
@@ -36,7 +40,6 @@ namespace Mimic.WebApi.Controllers
             return Ok(foundWord);
         }
 
-        [Route("")]
         [HttpPost]
         public IActionResult Add([FromBody] Word word)
         {
@@ -47,8 +50,8 @@ namespace Mimic.WebApi.Controllers
             return Created($"api/words/{word.Id}", word);
         }
 
-        [Route("{id}")]
-        [HttpPut]
+
+        [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody] Word word)
         {
             var foundWord = mimicContext.Words.FirstOrDefault(x => x.Id == id);
@@ -64,8 +67,7 @@ namespace Mimic.WebApi.Controllers
             return NoContent();
         }
 
-        [Route("{id}")]
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
             var foundWord = mimicContext.Words.Find(id);
