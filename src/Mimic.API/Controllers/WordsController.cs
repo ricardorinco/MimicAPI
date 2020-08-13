@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Mimic.WebApi.Database.DataContext;
+using Mimic.WebApi.Helpers;
 using Mimic.WebApi.Models;
+using Newtonsoft.Json;
 using System;
 using System.Linq;
 
@@ -18,12 +20,33 @@ namespace Mimic.WebApi.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAll([FromQuery] DateTime? searchDate)
+        public IActionResult GetAll([FromQuery] WordUrlQuery query)
         {
             var words = mimicContext.Words.AsQueryable();
-            if (searchDate.HasValue)
+            if (query.SearchDate.HasValue)
             {
-                words = words.Where(x => x.CreatedAt > searchDate);
+                words = words.Where(x => x.CreatedAt > query.SearchDate);
+            }
+
+            if (query.Page.HasValue)
+            {
+                var totalData = words.Count();
+                words = words.Skip((query.Page.Value - 1) * query.DataAmount.Value).Take(query.DataAmount.Value);
+                var pagination = new Pagination()
+                {
+                    Number = query.Page.Value,
+                    Total = (int)Math.Ceiling((double)totalData / query.DataAmount.Value),
+
+                    DataPerPage = query.DataAmount.Value,
+                    TotalData = totalData
+                };
+
+                Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(pagination));
+
+                if (query.Page.Value > pagination.Total)
+                {
+                    return NotFound();
+                }
             }
 
             return Ok(words);
