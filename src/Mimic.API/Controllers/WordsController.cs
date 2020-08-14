@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Mimic.WebApi.Database.DataContext;
 using Mimic.WebApi.Helpers;
 using Mimic.WebApi.Models;
+using Mimic.WebApi.Repository;
+using Mimic.WebApi.Repository.Interfaces;
 using Newtonsoft.Json;
-using System;
-using System.Linq;
 
 namespace Mimic.WebApi.Controllers
 {
@@ -12,42 +11,24 @@ namespace Mimic.WebApi.Controllers
     [Route("api/words")]
     public class WordsController : ControllerBase
     {
-        private readonly MimicContext mimicContext;
+        private readonly IWordRepository wordRepository;
 
-        public WordsController(MimicContext mimicContext)
+        public WordsController(IWordRepository wordRepository)
         {
-            this.mimicContext = mimicContext;
+            this.wordRepository = wordRepository;
         }
 
         [HttpGet]
         public IActionResult GetAll([FromQuery] WordUrlQuery query)
         {
-            var words = mimicContext.Words.AsQueryable();
-            if (query.SearchDate.HasValue)
+            var words = wordRepository.Get(query);
+
+            if (query.Page.Value > words.Pagination.Total)
             {
-                words = words.Where(x => x.CreatedAt > query.SearchDate);
+                return NotFound();
             }
 
-            if (query.Page.HasValue)
-            {
-                var totalData = words.Count();
-                words = words.Skip((query.Page.Value - 1) * query.DataAmount.Value).Take(query.DataAmount.Value);
-                var pagination = new Pagination()
-                {
-                    Number = query.Page.Value,
-                    Total = (int)Math.Ceiling((double)totalData / query.DataAmount.Value),
-
-                    DataPerPage = query.DataAmount.Value,
-                    TotalData = totalData
-                };
-
-                Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(pagination));
-
-                if (query.Page.Value > pagination.Total)
-                {
-                    return NotFound();
-                }
-            }
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(words.Pagination));
 
             return Ok(words);
         }
@@ -55,7 +36,7 @@ namespace Mimic.WebApi.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            var foundWord = mimicContext.Words.FirstOrDefault(x => x.Id == id);
+            var foundWord = wordRepository.GetById(id);
 
             if (foundWord == null)
                 return NotFound();
@@ -66,26 +47,21 @@ namespace Mimic.WebApi.Controllers
         [HttpPost]
         public IActionResult Add([FromBody] Word word)
         {
-            word.CreatedAt = DateTime.Now;
-            mimicContext.Words.Add(word);
-            mimicContext.SaveChanges();
+            wordRepository.Add(word);
 
             return Created($"api/words/{word.Id}", word);
         }
 
-
         [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody] Word word)
         {
-            var foundWord = mimicContext.Words.FirstOrDefault(x => x.Id == id);
+            var foundWord = wordRepository.GetById(id);
 
             if (foundWord == null)
                 return NotFound();
 
             foundWord.Id = id;
-            foundWord.UpdatedAt = DateTime.Now;
-            mimicContext.Words.Update(foundWord);
-            mimicContext.SaveChanges();
+            wordRepository.Update(foundWord);
 
             return NoContent();
         }
@@ -93,15 +69,14 @@ namespace Mimic.WebApi.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var foundWord = mimicContext.Words.Find(id);
+            var foundWord = wordRepository.GetById(id);
+
             if (foundWord == null)
                 return NotFound();
 
-            foundWord.Active = false;
-            mimicContext.Words.Update(foundWord);
-            mimicContext.SaveChanges();
+            wordRepository.Delete(id);
 
-            return Ok();
+            return NoContent();
         }
     }
 }

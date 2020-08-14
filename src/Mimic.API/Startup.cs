@@ -4,6 +4,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Mimic.WebApi.Database.DataContext;
+using Mimic.WebApi.Repository;
+using Mimic.WebApi.Repository.Interfaces;
 
 namespace Mimic.WebApi
 {
@@ -20,6 +22,8 @@ namespace Mimic.WebApi
         {
             services.AddControllers();
             services.AddDbContext<MimicContext>();
+
+            services.AddScoped<IWordRepository, WordRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
