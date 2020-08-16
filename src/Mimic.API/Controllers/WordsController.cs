@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Mimic.WebApi.Helpers;
 using Mimic.WebApi.Models;
-using Mimic.WebApi.Repository;
+using Mimic.WebApi.Models.Dtos;
 using Mimic.WebApi.Repository.Interfaces;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace Mimic.WebApi.Controllers
 {
@@ -21,8 +22,10 @@ namespace Mimic.WebApi.Controllers
         [HttpGet]
         public IActionResult GetAll([FromQuery] WordUrlQuery query)
         {
-            var words = wordRepository.Get(query);
+            query.Page = query.Page.HasValue ? query.Page.Value : 1;
+            query.DataAmount = query.DataAmount.HasValue ? query.DataAmount.Value : 10;
 
+            var words = wordRepository.Get(query);
             if (query.Page.Value > words.Pagination.Total)
             {
                 return NotFound();
@@ -41,7 +44,18 @@ namespace Mimic.WebApi.Controllers
             if (foundWord == null)
                 return NotFound();
 
-            return Ok(foundWord);
+            var wordDto = (WordDto)foundWord;
+            wordDto.Links = new List<LinkDto>();
+            wordDto.Links.Add(
+                new LinkDto
+                (
+                    "self",
+                    $"https://localhost:44367/api/words/{wordDto.Id}",
+                    "GET"
+                )
+            );
+
+            return Ok(wordDto);
         }
 
         [HttpPost]
