@@ -43,7 +43,7 @@ namespace Mimic.WebApi.Repository
                 paginationList.Pagination = pagination;
             }
 
-            paginationList.AddRange(words.ToList());
+            paginationList.Results.AddRange(words.ToList());
 
             return paginationList;
         }
@@ -74,6 +74,5 @@ namespace Mimic.WebApi.Repository
             mimicContext.Words.Update(foundWord);
             mimicContext.SaveChanges();
         }
-
     }
 }

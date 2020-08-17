@@ -19,24 +19,53 @@ namespace Mimic.WebApi.Controllers
             this.wordRepository = wordRepository;
         }
 
-        [HttpGet]
-        public IActionResult GetAll([FromQuery] WordUrlQuery query)
+        [HttpGet("", Name = "GetAllBySearch")]
+        public IActionResult GetAllBySearch([FromQuery] WordUrlQuery query)
         {
             query.Page = query.Page.HasValue ? query.Page.Value : 1;
             query.DataAmount = query.DataAmount.HasValue ? query.DataAmount.Value : 10;
 
             var words = wordRepository.Get(query);
-            if (query.Page.Value > words.Pagination.Total)
+
+            if (words.Results.Count == 0)
             {
                 return NotFound();
             }
 
-            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(words.Pagination));
+            var workPaginationDto = new PaginationList<WordDto>();
+            foreach (var word in words.Results)
+            {
+                var wordDto = (WordDto)word;
+                wordDto.Links = new List<LinkDto>();
+                wordDto.Links.Add(new LinkDto("self", Url.Link("GetWord", new { id = wordDto.Id }), "GET"));
+                wordDto.Links.Add(new LinkDto("update", Url.Link("UpdateWord", new { id = wordDto.Id }), "PUT"));
+                wordDto.Links.Add(new LinkDto("delete", Url.Link("DeleteWord", new { id = wordDto.Id }), "DELETE"));
+                
+                workPaginationDto.Results.Add(wordDto);
+            }
 
-            return Ok(words);
+            if (words.Pagination != null)
+            {
+                Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(words.Pagination));
+
+                if (query.Page + 1 <= words.Pagination.Total)
+                {
+                    var queryString = new WordUrlQuery() { Page = query.Page + 1, DataAmount = query.DataAmount, SearchDate = query.SearchDate };
+                    workPaginationDto.Links.Add(new LinkDto("next", Url.Link("GetAllBySearch", queryString), "GET"));
+                }
+
+                if (query.Page + 1 > 0)
+                {
+                    var queryString = new WordUrlQuery() { Page = query.Page - 1, DataAmount = query.DataAmount, SearchDate = query.SearchDate };
+                    workPaginationDto.Links.Add(new LinkDto("previous", Url.Link("GetAllBySearch", queryString), "GET"));
+                }
+
+            }
+
+            return Ok(workPaginationDto);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetWord")]
         public IActionResult Get(int id)
         {
             var foundWord = wordRepository.GetById(id);
@@ -46,14 +75,9 @@ namespace Mimic.WebApi.Controllers
 
             var wordDto = (WordDto)foundWord;
             wordDto.Links = new List<LinkDto>();
-            wordDto.Links.Add(
-                new LinkDto
-                (
-                    "self",
-                    $"https://localhost:44367/api/words/{wordDto.Id}",
-                    "GET"
-                )
-            );
+            wordDto.Links.Add(new LinkDto("self", Url.Link("GetWord", new { id = wordDto.Id }), "GET"));
+            wordDto.Links.Add(new LinkDto("update", Url.Link("UpdateWord", new { id = wordDto.Id }), "PUT"));
+            wordDto.Links.Add(new LinkDto("delete", Url.Link("DeleteWord", new { id = wordDto.Id }), "DELETE"));
 
             return Ok(wordDto);
         }
@@ -66,7 +90,7 @@ namespace Mimic.WebApi.Controllers
             return Created($"api/words/{word.Id}", word);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{id}", Name = "UpdateWord")]
         public IActionResult Update(int id, [FromBody] Word word)
         {
             var foundWord = wordRepository.GetById(id);
@@ -80,7 +104,7 @@ namespace Mimic.WebApi.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}", Name = "DeleteWord")]
         public IActionResult Delete(int id)
         {
             var foundWord = wordRepository.GetById(id);
