@@ -1,0 +1,192 @@
+{
+	"info": {
+		"_postman_id": "23ba2f51-7b84-4824-b8ff-82a33d2a1e35",
+		"name": "Mimic API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "v1",
+			"item": [
+				{
+					"name": "Words",
+					"item": [
+						{
+							"name": "Adicionar Palavra",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"mimic\": \"Tartaruga\",\r\n    \"points\": 5\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}:{{port}}/api/v1/words/",
+									"host": [
+										"{{url}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"api",
+										"v1",
+										"words",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Atualizar Palavra",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"mimic\": \"Jabuti\",\r\n    \"points\": 6,\r\n    \"active\": true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}:{{port}}/api/v1/words/1",
+									"host": [
+										"{{url}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"api",
+										"v1",
+										"words",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Deletar Palavra",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}:{{port}}/api/v1/words/1",
+									"host": [
+										"{{url}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"api",
+										"v1",
+										"words",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obter Palavras",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}:{{port}}/api/v1/words?searchDate=2020-08-11&page=1&dataAmount=10",
+									"host": [
+										"{{url}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"api",
+										"v1",
+										"words"
+									],
+									"query": [
+										{
+											"key": "searchDate",
+											"value": "2020-08-11"
+										},
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "dataAmount",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obter Palavra por Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}:{{port}}/api/v1/words/2",
+									"host": [
+										"{{url}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"api",
+										"v1",
+										"words",
+										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "v2",
+			"item": [
+				{
+					"name": "Words",
+					"item": [
+						{
+							"name": "Obter Palavras",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}:{{port}}/api/v2/words",
+									"host": [
+										"{{url}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"api",
+										"v2",
+										"words"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
