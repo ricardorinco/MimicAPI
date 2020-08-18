@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Mimic.WebApi.Models
+namespace Mimic.WebApi.V1.Models
 {
     public abstract class Base
     {

@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Mimic.WebApi.Models;
+using Mimic.WebApi.V1.Models;
 
 namespace Mimic.WebApi.Database.DataContext
 {

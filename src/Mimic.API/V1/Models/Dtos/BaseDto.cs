@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Mimic.WebApi.Models.Dtos
+namespace Mimic.WebApi.V1.Models.Dtos
 {
     public abstract class BaseDto
     {
@@ -11,6 +11,6 @@ namespace Mimic.WebApi.Models.Dtos
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
 
-        public List<LinkDto> Links { get; set; }
+        public List<LinkDto> Links { get; set; } = new List<LinkDto>();
     }
 }

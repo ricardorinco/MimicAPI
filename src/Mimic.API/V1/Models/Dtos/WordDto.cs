@@ -1,6 +1,4 @@
-﻿using Mimic.WebApi.Helpers;
-
-namespace Mimic.WebApi.Models.Dtos
+﻿namespace Mimic.WebApi.V1.Models.Dtos
 {
     public class WordDto : BaseDto
     {

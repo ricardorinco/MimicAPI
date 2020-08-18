@@ -1,11 +1,12 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Mimic.WebApi.Database.DataContext;
-using Mimic.WebApi.Repository;
-using Mimic.WebApi.Repository.Interfaces;
+using Mimic.WebApi.V1.Repository;
+using Mimic.WebApi.V1.Repository.Interfaces;
 
 namespace Mimic.WebApi
 {
@@ -22,6 +23,11 @@ namespace Mimic.WebApi
         {
             services.AddControllers();
             services.AddDbContext<MimicContext>();
+            services.AddApiVersioning(cfg =>
+            {
+                cfg.ReportApiVersions = true;
+                cfg.DefaultApiVersion = new ApiVersion(1, 0);
+            });
 
             services.AddScoped<IWordRepository, WordRepository>();
         }

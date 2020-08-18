@@ -1,15 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Mimic.WebApi.Helpers;
-using Mimic.WebApi.Models;
-using Mimic.WebApi.Models.Dtos;
-using Mimic.WebApi.Repository.Interfaces;
+using Mimic.WebApi.V1.Models;
+using Mimic.WebApi.V1.Models.Dtos;
+using Mimic.WebApi.V1.Repository.Interfaces;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 
-namespace Mimic.WebApi.Controllers
+namespace Mimic.WebApi.V1.Controllers
 {
     [ApiController]
-    [Route("api/words")]
+    [Route("api/v{version:apiVersion}/words")]
+    [ApiVersion("1")]
     public class WordsController : ControllerBase
     {
         private readonly IWordRepository wordRepository;
@@ -32,7 +34,7 @@ namespace Mimic.WebApi.Controllers
                 return NotFound();
             }
 
-            var workPaginationDto = new PaginationList<WordDto>();
+            var wordPaginationDto = new PaginationList<WordDto>();
             foreach (var word in words.Results)
             {
                 var wordDto = (WordDto)word;
@@ -40,8 +42,8 @@ namespace Mimic.WebApi.Controllers
                 wordDto.Links.Add(new LinkDto("self", Url.Link("GetWord", new { id = wordDto.Id }), "GET"));
                 wordDto.Links.Add(new LinkDto("update", Url.Link("UpdateWord", new { id = wordDto.Id }), "PUT"));
                 wordDto.Links.Add(new LinkDto("delete", Url.Link("DeleteWord", new { id = wordDto.Id }), "DELETE"));
-                
-                workPaginationDto.Results.Add(wordDto);
+
+                wordPaginationDto.Results.Add(wordDto);
             }
 
             if (words.Pagination != null)
@@ -51,18 +53,18 @@ namespace Mimic.WebApi.Controllers
                 if (query.Page + 1 <= words.Pagination.Total)
                 {
                     var queryString = new WordUrlQuery() { Page = query.Page + 1, DataAmount = query.DataAmount, SearchDate = query.SearchDate };
-                    workPaginationDto.Links.Add(new LinkDto("next", Url.Link("GetAllBySearch", queryString), "GET"));
+                    wordPaginationDto.Links.Add(new LinkDto("next", Url.Link("GetAllBySearch", queryString), "GET"));
                 }
 
                 if (query.Page + 1 > 0)
                 {
                     var queryString = new WordUrlQuery() { Page = query.Page - 1, DataAmount = query.DataAmount, SearchDate = query.SearchDate };
-                    workPaginationDto.Links.Add(new LinkDto("previous", Url.Link("GetAllBySearch", queryString), "GET"));
+                    wordPaginationDto.Links.Add(new LinkDto("previous", Url.Link("GetAllBySearch", queryString), "GET"));
                 }
 
             }
 
-            return Ok(workPaginationDto);
+            return Ok(wordPaginationDto);
         }
 
         [HttpGet("{id}", Name = "GetWord")]
@@ -85,9 +87,24 @@ namespace Mimic.WebApi.Controllers
         [HttpPost]
         public IActionResult Add([FromBody] Word word)
         {
+            if (word == null)
+            {
+                return BadRequest();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return UnprocessableEntity(ModelState);
+            }
+
+            word.CreatedAt = DateTime.Now;
+            word.Active = true;
             wordRepository.Add(word);
 
-            return Created($"api/words/{word.Id}", word);
+            var wordDto = (WordDto)word;
+            wordDto.Links.Add(new LinkDto("self", Url.Link("GetWord", new { id = wordDto.Id }), "GET"));
+
+            return Created($"api/words/{word.Id}", wordDto);
         }
 
         [HttpPut("{id}", Name = "UpdateWord")]
@@ -98,10 +115,16 @@ namespace Mimic.WebApi.Controllers
             if (foundWord == null)
                 return NotFound();
 
-            foundWord.Id = id;
-            wordRepository.Update(foundWord);
+            word.Id = foundWord.Id;
+            word.CreatedAt = foundWord.CreatedAt;
+            word.Active = foundWord.Active;
+            word.UpdatedAt = DateTime.Now;
+            wordRepository.Update(word);
 
-            return NoContent();
+            var wordDto = (WordDto)word;
+            wordDto.Links.Add(new LinkDto("self", Url.Link("GetWord", new { id = wordDto.Id }), "GET"));
+
+            return Ok(wordDto);
         }
 
         [HttpDelete("{id}", Name = "DeleteWord")]

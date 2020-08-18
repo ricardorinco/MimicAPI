@@ -1,4 +1,4 @@
-﻿using Mimic.WebApi.Models.Dtos;
+﻿using Mimic.WebApi.V1.Models.Dtos;
 using System.Collections.Generic;
 
 namespace Mimic.WebApi.Helpers

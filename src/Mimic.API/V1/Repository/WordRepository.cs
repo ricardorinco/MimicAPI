@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Mimic.WebApi.Database.DataContext;
 using Mimic.WebApi.Helpers;
-using Mimic.WebApi.Models;
-using Mimic.WebApi.Repository.Interfaces;
+using Mimic.WebApi.V1.Models;
+using Mimic.WebApi.V1.Repository.Interfaces;
 using System;
 using System.Linq;
 
-namespace Mimic.WebApi.Repository
+namespace Mimic.WebApi.V1.Repository
 {
     public class WordRepository : IWordRepository
     {
@@ -54,15 +54,11 @@ namespace Mimic.WebApi.Repository
 
         public void Add(Word word)
         {
-            word.CreatedAt = DateTime.Now;
-
             mimicContext.Words.Add(word);
             mimicContext.SaveChanges();
         }
         public void Update(Word word)
         {
-            word.UpdatedAt = DateTime.Now;
-
             mimicContext.Words.Update(word);
             mimicContext.SaveChanges();
         }
