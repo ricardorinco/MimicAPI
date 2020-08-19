@@ -4,9 +4,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using Mimic.WebApi.Database.DataContext;
+using Mimic.WebApi.Helpers.Swagger;
 using Mimic.WebApi.V1.Repository;
 using Mimic.WebApi.V1.Repository.Interfaces;
+using System;
+using System.Linq;
 
 namespace Mimic.WebApi
 {
@@ -30,6 +34,30 @@ namespace Mimic.WebApi
             });
 
             services.AddScoped<IWordRepository, WordRepository>();
+            services.AddSwaggerGen(cfg =>
+            {
+                cfg.ResolveConflictingActions(apiDescription => apiDescription.First());
+                cfg.SwaggerDoc("v2", new OpenApiInfo { Title = "Mimic API", Version = "v2" });
+                cfg.SwaggerDoc("v1.1", new OpenApiInfo { Title = "Mimic API", Version = "v1.1" });
+                cfg.SwaggerDoc("v1", new OpenApiInfo { Title = "Mimic API", Version = "v1" });
+                cfg.DocInclusionPredicate((docName, apiDesc) =>
+                {
+                    var actionApiVersionModel = apiDesc.ActionDescriptor?.GetApiVersion();
+                    if (actionApiVersionModel == null)
+                    {
+                        return true;
+                    }
+
+                    if (actionApiVersionModel.DeclaredApiVersions.Any())
+                    {
+                        return actionApiVersionModel.DeclaredApiVersions.Any(v => $"v{v}" == docName);
+                    }
+
+                    return actionApiVersionModel.ImplementedApiVersions.Any(v => $"v{v}" == docName);
+                });
+                cfg.OperationFilter<RemoveVersionParameterFilter>();
+                cfg.DocumentFilter<ReplaceVersionWithExactValueInPathFilter>();
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -43,6 +71,14 @@ namespace Mimic.WebApi
             app.UseRouting();
             app.UseAuthorization();
             app.UseStatusCodePages();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(cfg => {
+                cfg.SwaggerEndpoint("/swagger/v2/swagger.json", "Mimic API - v2");
+                cfg.SwaggerEndpoint("/swagger/v1.1/swagger.json", "Mimic API - v1.1");
+                cfg.SwaggerEndpoint("/swagger/v1/swagger.json", "Mimic API - v1");
+                cfg.RoutePrefix = string.Empty;
+            });
 
             app.UseEndpoints(endpoints =>
             {

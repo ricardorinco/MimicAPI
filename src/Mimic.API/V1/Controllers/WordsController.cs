@@ -11,7 +11,8 @@ namespace Mimic.WebApi.V1.Controllers
 {
     [ApiController]
     [Route("api/v{version:apiVersion}/words")]
-    [ApiVersion("1")]
+    [ApiVersion("1", Deprecated = true)]
+    [ApiVersion("1.1")]
     public class WordsController : ControllerBase
     {
         private readonly IWordRepository wordRepository;
@@ -22,6 +23,8 @@ namespace Mimic.WebApi.V1.Controllers
         }
 
         [HttpGet("", Name = "GetAllBySearch")]
+        [MapToApiVersion("1.0")]
+        [MapToApiVersion("1.1")]
         public IActionResult GetAllBySearch([FromQuery] WordUrlQuery query)
         {
             query.Page = query.Page.HasValue ? query.Page.Value : 1;
@@ -68,6 +71,8 @@ namespace Mimic.WebApi.V1.Controllers
         }
 
         [HttpGet("{id}", Name = "GetWord")]
+        [MapToApiVersion("1.0")]
+        [MapToApiVersion("1.1")]
         public IActionResult Get(int id)
         {
             var foundWord = wordRepository.GetById(id);
@@ -85,6 +90,8 @@ namespace Mimic.WebApi.V1.Controllers
         }
 
         [HttpPost]
+        [MapToApiVersion("1.0")]
+        [MapToApiVersion("1.1")]
         public IActionResult Add([FromBody] Word word)
         {
             if (word == null)
@@ -108,6 +115,8 @@ namespace Mimic.WebApi.V1.Controllers
         }
 
         [HttpPut("{id}", Name = "UpdateWord")]
+        [MapToApiVersion("1.0")]
+        [MapToApiVersion("1.1")]
         public IActionResult Update(int id, [FromBody] Word word)
         {
             var foundWord = wordRepository.GetById(id);
@@ -128,6 +137,7 @@ namespace Mimic.WebApi.V1.Controllers
         }
 
         [HttpDelete("{id}", Name = "DeleteWord")]
+        [MapToApiVersion("1.1")]
         public IActionResult Delete(int id)
         {
             var foundWord = wordRepository.GetById(id);
