@@ -4,12 +4,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.OpenApi.Models;
 using Mimic.WebApi.Database.DataContext;
 using Mimic.WebApi.Helpers.Swagger;
 using Mimic.WebApi.V1.Repository;
 using Mimic.WebApi.V1.Repository.Interfaces;
 using System;
+using System.IO;
 using System.Linq;
 
 namespace Mimic.WebApi
@@ -33,6 +35,10 @@ namespace Mimic.WebApi
                 cfg.DefaultApiVersion = new ApiVersion(1, 0);
             });
 
+            var caminhoProjeto = PlatformServices.Default.Application.ApplicationBasePath;
+            var nomeProjeto = $"{PlatformServices.Default.Application.ApplicationName}.xml";
+            var caminhoArquivo = Path.Combine(caminhoProjeto, nomeProjeto);
+
             services.AddScoped<IWordRepository, WordRepository>();
             services.AddSwaggerGen(cfg =>
             {
@@ -40,6 +46,7 @@ namespace Mimic.WebApi
                 cfg.SwaggerDoc("v2", new OpenApiInfo { Title = "Mimic API", Version = "v2" });
                 cfg.SwaggerDoc("v1.1", new OpenApiInfo { Title = "Mimic API", Version = "v1.1" });
                 cfg.SwaggerDoc("v1", new OpenApiInfo { Title = "Mimic API", Version = "v1" });
+                cfg.IncludeXmlComments(caminhoArquivo);
                 cfg.DocInclusionPredicate((docName, apiDesc) =>
                 {
                     var actionApiVersionModel = apiDesc.ActionDescriptor?.GetApiVersion();

@@ -22,6 +22,11 @@ namespace Mimic.WebApi.V1.Controllers
             this.wordRepository = wordRepository;
         }
 
+        /// <summary>
+        /// Obtêm todas as palavras
+        /// </summary>
+        /// <param name="query">Filtros de pesquisa</param>
+        /// <returns>Lista de palavras</returns>
         [HttpGet("", Name = "GetAllBySearch")]
         [MapToApiVersion("1.0")]
         [MapToApiVersion("1.1")]
@@ -70,6 +75,11 @@ namespace Mimic.WebApi.V1.Controllers
             return Ok(wordPaginationDto);
         }
 
+        /// <summary>
+        /// Obtêm uma palavra por id
+        /// </summary>
+        /// <param name="id">Id da palavra</param>
+        /// <returns>Objeto de Palavra</returns>
         [HttpGet("{id}", Name = "GetWord")]
         [MapToApiVersion("1.0")]
         [MapToApiVersion("1.1")]
@@ -89,6 +99,11 @@ namespace Mimic.WebApi.V1.Controllers
             return Ok(wordDto);
         }
 
+        /// <summary>
+        /// Adiciona uma nova palavra
+        /// </summary>
+        /// <param name="word">Objeto de Palavra</param>
+        /// <returns>Objeto de Palavra</returns>
         [HttpPost]
         [MapToApiVersion("1.0")]
         [MapToApiVersion("1.1")]
@@ -114,6 +129,12 @@ namespace Mimic.WebApi.V1.Controllers
             return Created($"api/words/{word.Id}", wordDto);
         }
 
+        /// <summary>
+        /// Atualiza uma palavra
+        /// </summary>
+        /// <param name="id">Id da palavra</param>
+        /// <param name="word">Objeto de Palavra à atualizar</param>
+        /// <returns>Objeto de Palavra atualizado</returns>
         [HttpPut("{id}", Name = "UpdateWord")]
         [MapToApiVersion("1.0")]
         [MapToApiVersion("1.1")]
@@ -136,6 +157,11 @@ namespace Mimic.WebApi.V1.Controllers
             return Ok(wordDto);
         }
 
+        /// <summary>
+        /// Deleta uma palavra
+        /// </summary>
+        /// <param name="id">Id da palavra</param>
+        /// <returns></returns>
         [HttpDelete("{id}", Name = "DeleteWord")]
         [MapToApiVersion("1.1")]
         public IActionResult Delete(int id)
