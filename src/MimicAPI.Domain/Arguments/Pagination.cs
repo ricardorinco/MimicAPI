@@ -1,4 +1,4 @@
-﻿namespace Mimic.WebApi.Helpers
+﻿namespace Mimic.Domain.Arguments
 {
     public class Pagination
     {

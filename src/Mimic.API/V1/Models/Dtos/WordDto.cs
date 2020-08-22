@@ -1,4 +1,6 @@
-﻿namespace Mimic.WebApi.V1.Models.Dtos
+﻿using Mimic.Domain.Models;
+
+namespace Mimic.WebApi.V1.Models.Dtos
 {
     public class WordDto : BaseDto
     {
@@ -12,7 +14,7 @@
                 Id = word.Id,
                 Active = word.Active,
 
-                Mimic = word.Mimic,
+                Mimic = word.Description,
                 Points = word.Points,
 
                 CreatedAt = word.CreatedAt,

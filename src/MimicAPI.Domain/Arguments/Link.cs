@@ -1,13 +1,13 @@
-﻿namespace Mimic.WebApi.V1.Models.Dtos
+﻿namespace Mimic.Domain.Arguments
 {
-    public class LinkDto
+    public class Link
     {
         public string Rel { get; set; }
         public string Href { get; set; }
         public string Method { get; set; }
 
-        public LinkDto() { }
-        public LinkDto(string rel, string href, string method)
+        public Link() { }
+        public Link(string rel, string href, string method)
         {
             Rel = rel;
             Href = href;

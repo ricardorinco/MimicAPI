@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Mimic.Domain.Arguments;
+using System;
 using System.Collections.Generic;
 
 namespace Mimic.WebApi.V1.Models.Dtos
@@ -11,6 +12,6 @@ namespace Mimic.WebApi.V1.Models.Dtos
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
 
-        public List<LinkDto> Links { get; set; } = new List<LinkDto>();
+        public List<Link> Links { get; set; } = new List<Link>();
     }
 }

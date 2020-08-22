@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Mimic.Domain.Arguments;
+using Mimic.Domain.Interfaces.Repositories;
+using Mimic.Domain.Models;
 using Mimic.WebApi.Helpers;
 using Mimic.WebApi.V1.Models;
 using Mimic.WebApi.V1.Models.Dtos;
-using Mimic.WebApi.V1.Repository.Interfaces;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -30,12 +32,12 @@ namespace Mimic.WebApi.V1.Controllers
         [HttpGet("", Name = "GetAllBySearch")]
         [MapToApiVersion("1.0")]
         [MapToApiVersion("1.1")]
-        public IActionResult GetAllBySearch([FromQuery] WordUrlQuery query)
+        public IActionResult GetAllBySearch([FromQuery] WordQuery query)
         {
             query.Page = query.Page.HasValue ? query.Page.Value : 1;
             query.DataAmount = query.DataAmount.HasValue ? query.DataAmount.Value : 10;
 
-            var words = wordRepository.Get(query);
+            var words = wordRepository.GetByQuery(query);
 
             if (words.Results.Count == 0)
             {
@@ -46,10 +48,10 @@ namespace Mimic.WebApi.V1.Controllers
             foreach (var word in words.Results)
             {
                 var wordDto = (WordDto)word;
-                wordDto.Links = new List<LinkDto>();
-                wordDto.Links.Add(new LinkDto("self", Url.Link("GetWord", new { id = wordDto.Id }), "GET"));
-                wordDto.Links.Add(new LinkDto("update", Url.Link("UpdateWord", new { id = wordDto.Id }), "PUT"));
-                wordDto.Links.Add(new LinkDto("delete", Url.Link("DeleteWord", new { id = wordDto.Id }), "DELETE"));
+                wordDto.Links = new List<Link>();
+                wordDto.Links.Add(new Link("self", Url.Link("GetWord", new { id = wordDto.Id }), "GET"));
+                wordDto.Links.Add(new Link("update", Url.Link("UpdateWord", new { id = wordDto.Id }), "PUT"));
+                wordDto.Links.Add(new Link("delete", Url.Link("DeleteWord", new { id = wordDto.Id }), "DELETE"));
 
                 wordPaginationDto.Results.Add(wordDto);
             }
@@ -61,13 +63,13 @@ namespace Mimic.WebApi.V1.Controllers
                 if (query.Page + 1 <= words.Pagination.Total)
                 {
                     var queryString = new WordUrlQuery() { Page = query.Page + 1, DataAmount = query.DataAmount, SearchDate = query.SearchDate };
-                    wordPaginationDto.Links.Add(new LinkDto("next", Url.Link("GetAllBySearch", queryString), "GET"));
+                    wordPaginationDto.Links.Add(new Link("next", Url.Link("GetAllBySearch", queryString), "GET"));
                 }
 
                 if (query.Page + 1 > 0)
                 {
                     var queryString = new WordUrlQuery() { Page = query.Page - 1, DataAmount = query.DataAmount, SearchDate = query.SearchDate };
-                    wordPaginationDto.Links.Add(new LinkDto("previous", Url.Link("GetAllBySearch", queryString), "GET"));
+                    wordPaginationDto.Links.Add(new Link("previous", Url.Link("GetAllBySearch", queryString), "GET"));
                 }
 
             }
@@ -91,10 +93,10 @@ namespace Mimic.WebApi.V1.Controllers
                 return NotFound();
 
             var wordDto = (WordDto)foundWord;
-            wordDto.Links = new List<LinkDto>();
-            wordDto.Links.Add(new LinkDto("self", Url.Link("GetWord", new { id = wordDto.Id }), "GET"));
-            wordDto.Links.Add(new LinkDto("update", Url.Link("UpdateWord", new { id = wordDto.Id }), "PUT"));
-            wordDto.Links.Add(new LinkDto("delete", Url.Link("DeleteWord", new { id = wordDto.Id }), "DELETE"));
+            wordDto.Links = new List<Link>();
+            wordDto.Links.Add(new Link("self", Url.Link("GetWord", new { id = wordDto.Id }), "GET"));
+            wordDto.Links.Add(new Link("update", Url.Link("UpdateWord", new { id = wordDto.Id }), "PUT"));
+            wordDto.Links.Add(new Link("delete", Url.Link("DeleteWord", new { id = wordDto.Id }), "DELETE"));
 
             return Ok(wordDto);
         }
@@ -124,7 +126,7 @@ namespace Mimic.WebApi.V1.Controllers
             wordRepository.Add(word);
 
             var wordDto = (WordDto)word;
-            wordDto.Links.Add(new LinkDto("self", Url.Link("GetWord", new { id = wordDto.Id }), "GET"));
+            wordDto.Links.Add(new Link("self", Url.Link("GetWord", new { id = wordDto.Id }), "GET"));
 
             return Created($"api/words/{word.Id}", wordDto);
         }
@@ -152,7 +154,7 @@ namespace Mimic.WebApi.V1.Controllers
             wordRepository.Update(word);
 
             var wordDto = (WordDto)word;
-            wordDto.Links.Add(new LinkDto("self", Url.Link("GetWord", new { id = wordDto.Id }), "GET"));
+            wordDto.Links.Add(new Link("self", Url.Link("GetWord", new { id = wordDto.Id }), "GET"));
 
             return Ok(wordDto);
         }

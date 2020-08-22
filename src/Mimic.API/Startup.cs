@@ -6,11 +6,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.OpenApi.Models;
+using Mimic.Domain.Interfaces.Repositories;
 using Mimic.WebApi.Database.DataContext;
 using Mimic.WebApi.Helpers.Swagger;
 using Mimic.WebApi.V1.Repository;
-using Mimic.WebApi.V1.Repository.Interfaces;
-using System;
 using System.IO;
 using System.Linq;
 

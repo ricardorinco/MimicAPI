@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Mimic.Domain.Arguments;
+using System;
+using System.Collections.Generic;
 
-namespace Mimic.WebApi.V1.Models
+namespace Mimic.Domain.Models
 {
     public abstract class Base
     {

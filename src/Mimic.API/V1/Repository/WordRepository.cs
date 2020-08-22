@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Mimic.Domain.Arguments;
+using Mimic.Domain.Interfaces.Repositories;
+using Mimic.Domain.Models;
 using Mimic.WebApi.Database.DataContext;
-using Mimic.WebApi.Helpers;
-using Mimic.WebApi.V1.Models;
-using Mimic.WebApi.V1.Repository.Interfaces;
 using System;
 using System.Linq;
 
@@ -17,26 +17,26 @@ namespace Mimic.WebApi.V1.Repository
             this.mimicContext = mimicContext;
         }
 
-        public PaginationList<Word> Get(WordUrlQuery query)
+        public PaginationList<Word> GetByQuery(WordQuery wordQuery)
         {
             var paginationList = new PaginationList<Word>();
             var words = mimicContext.Words.AsNoTracking().AsQueryable();
 
-            if (query.SearchDate.HasValue)
+            if (wordQuery.SearchDate.HasValue)
             {
-                words = words.Where(x => x.CreatedAt > query.SearchDate);
+                words = words.Where(x => x.CreatedAt > wordQuery.SearchDate);
             }
 
-            if (query.Page.HasValue)
+            if (wordQuery.Page.HasValue)
             {
                 var totalData = words.Count();
-                words = words.Skip((query.Page.Value - 1) * query.DataAmount.Value).Take(query.DataAmount.Value);
+                words = words.Skip((wordQuery.Page.Value - 1) * wordQuery.DataAmount.Value).Take(wordQuery.DataAmount.Value);
                 var pagination = new Pagination()
                 {
-                    Number = query.Page.Value,
-                    Total = (int)Math.Ceiling((double)totalData / query.DataAmount.Value),
+                    Number = wordQuery.Page.Value,
+                    Total = (int)Math.Ceiling((double)totalData / wordQuery.DataAmount.Value),
 
-                    DataPerPage = query.DataAmount.Value,
+                    DataPerPage = wordQuery.DataAmount.Value,
                     TotalData = totalData
                 };
 

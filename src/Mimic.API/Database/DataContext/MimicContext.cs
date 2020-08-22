@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Mimic.WebApi.V1.Models;
+using Mimic.Domain.Models;
 
 namespace Mimic.WebApi.Database.DataContext
 {
     public class MimicContext : DbContext
     {
-        public DbSet<Word>  Words { get; set; }
+        public DbSet<Word> Words { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

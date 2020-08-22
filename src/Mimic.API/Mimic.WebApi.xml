@@ -4,7 +4,7 @@
         <name>Mimic.WebApi</name>
     </assembly>
     <members>
-        <member name="M:Mimic.WebApi.V1.Controllers.WordsController.GetAllBySearch(Mimic.WebApi.Helpers.WordUrlQuery)">
+        <member name="M:Mimic.WebApi.V1.Controllers.WordsController.GetAllBySearch(Mimic.Domain.Arguments.WordQuery)">
             <summary>
             Obtêm todas as palavras
             </summary>
@@ -18,14 +18,14 @@
             <param name="id">Id da palavra</param>
             <returns>Objeto de Palavra</returns>
         </member>
-        <member name="M:Mimic.WebApi.V1.Controllers.WordsController.Add(Mimic.WebApi.V1.Models.Word)">
+        <member name="M:Mimic.WebApi.V1.Controllers.WordsController.Add(Mimic.Domain.Models.Word)">
             <summary>
             Adiciona uma nova palavra
             </summary>
             <param name="word">Objeto de Palavra</param>
             <returns>Objeto de Palavra</returns>
         </member>
-        <member name="M:Mimic.WebApi.V1.Controllers.WordsController.Update(System.Int32,Mimic.WebApi.V1.Models.Word)">
+        <member name="M:Mimic.WebApi.V1.Controllers.WordsController.Update(System.Int32,Mimic.Domain.Models.Word)">
             <summary>
             Atualiza uma palavra
             </summary>

@@ -1,11 +1,11 @@
-﻿using Mimic.WebApi.Helpers;
-using Mimic.WebApi.V1.Models;
+﻿using Mimic.Domain.Arguments;
+using Mimic.Domain.Models;
 
-namespace Mimic.WebApi.V1.Repository.Interfaces
+namespace Mimic.Domain.Interfaces.Repositories
 {
     public interface IWordRepository
     {
-        PaginationList<Word> Get(WordUrlQuery query);
+        PaginationList<Word> GetByQuery(WordQuery wordQuery);
         Word GetById(int id);
 
         void Add(Word word);
