@@ -2,15 +2,16 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Mimic.WebApi.Database.DataContext;
+using Microsoft.EntityFrameworkCore.Migrations;
+using Mimic.Infra.Data.DataContext;
 
-namespace Mimic.WebApi.Migrations
+namespace Mimic.Infra.Data.Migrations
 {
     [DbContext(typeof(MimicContext))]
-    partial class MimicContextModelSnapshot : ModelSnapshot
+    [Migration("20200822222438_UpdateWord")]
+    partial class UpdateWord
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

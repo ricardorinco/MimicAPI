@@ -2,11 +2,11 @@
 using Mimic.Domain.Arguments;
 using Mimic.Domain.Interfaces.Repositories;
 using Mimic.Domain.Models;
-using Mimic.WebApi.Database.DataContext;
+using Mimic.Infra.Data.DataContext;
 using System;
 using System.Linq;
 
-namespace Mimic.WebApi.V1.Repository
+namespace Mimic.Infra.Data.Repositories
 {
     public class WordRepository : IWordRepository
     {

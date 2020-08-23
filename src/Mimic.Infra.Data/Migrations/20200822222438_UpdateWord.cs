@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Mimic.WebApi.Migrations
+namespace Mimic.Infra.Data.Migrations
 {
     public partial class UpdateWord : Migration
     {

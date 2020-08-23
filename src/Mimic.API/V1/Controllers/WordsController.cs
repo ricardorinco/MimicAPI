@@ -3,7 +3,6 @@ using Mimic.Domain.Arguments;
 using Mimic.Domain.Interfaces.Repositories;
 using Mimic.Domain.Models;
 using Mimic.WebApi.Helpers;
-using Mimic.WebApi.V1.Models;
 using Mimic.WebApi.V1.Models.Dtos;
 using Newtonsoft.Json;
 using System;

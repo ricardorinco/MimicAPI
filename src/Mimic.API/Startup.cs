@@ -7,9 +7,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.OpenApi.Models;
 using Mimic.Domain.Interfaces.Repositories;
-using Mimic.WebApi.Database.DataContext;
+using Mimic.Infra.Data.DataContext;
+using Mimic.Infra.Data.Repositories;
 using Mimic.WebApi.Helpers.Swagger;
-using Mimic.WebApi.V1.Repository;
 using System.IO;
 using System.Linq;
 
@@ -26,6 +26,8 @@ namespace Mimic.WebApi
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton(Configuration);
+
             services.AddControllers();
             services.AddDbContext<MimicContext>();
             services.AddApiVersioning(cfg =>
