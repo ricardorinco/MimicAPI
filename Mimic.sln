@@ -8,9 +8,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mimic.WebApi", "src\Mimic.A
 		{1BCB17A5-F791-40E0-AF9C-86D0D93799B1} = {1BCB17A5-F791-40E0-AF9C-86D0D93799B1}
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mimic.Domain", "src\MimicAPI.Domain\Mimic.Domain.csproj", "{1BCB17A5-F791-40E0-AF9C-86D0D93799B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mimic.Domain", "src\Mimic.Domain\Mimic.Domain.csproj", "{1BCB17A5-F791-40E0-AF9C-86D0D93799B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mimic.Infra.Data", "src\Mimic.Infra.Data\Mimic.Infra.Data.csproj", "{7180D677-D545-440B-9C0B-2B287DB5739A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mimic.Infra.Data", "src\Mimic.Infra.Data\Mimic.Infra.Data.csproj", "{7180D677-D545-440B-9C0B-2B287DB5739A}"
 	ProjectSection(ProjectDependencies) = postProject
 		{1BCB17A5-F791-40E0-AF9C-86D0D93799B1} = {1BCB17A5-F791-40E0-AF9C-86D0D93799B1}
 	EndProjectSection
@@ -20,6 +20,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Domain", "3 - Domain", "{4EE781E6-2A1A-49FB-B087-17E6937B655D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4 - Infra", "4 - Infra", "{AA2221AC-9B9A-4701-ABA0-4D2EAE7DC076}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Application", "2 - Application", "{7E8CB57F-0E87-4387-9E5B-2CF4C1C54810}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mimic.Application", "src\Mimic.Application\Mimic.Application.csproj", "{49A6FD38-03E2-4D9A-9A44-14AD472D0E33}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +43,10 @@ Global
 		{7180D677-D545-440B-9C0B-2B287DB5739A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7180D677-D545-440B-9C0B-2B287DB5739A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7180D677-D545-440B-9C0B-2B287DB5739A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49A6FD38-03E2-4D9A-9A44-14AD472D0E33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49A6FD38-03E2-4D9A-9A44-14AD472D0E33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49A6FD38-03E2-4D9A-9A44-14AD472D0E33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49A6FD38-03E2-4D9A-9A44-14AD472D0E33}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -47,6 +55,7 @@ Global
 		{E1FDEAE9-7863-4916-B09E-4A7BF3C1A092} = {66F6C3AA-0392-468B-B776-48ECFDF46BDF}
 		{1BCB17A5-F791-40E0-AF9C-86D0D93799B1} = {4EE781E6-2A1A-49FB-B087-17E6937B655D}
 		{7180D677-D545-440B-9C0B-2B287DB5739A} = {AA2221AC-9B9A-4701-ABA0-4D2EAE7DC076}
+		{49A6FD38-03E2-4D9A-9A44-14AD472D0E33} = {7E8CB57F-0E87-4387-9E5B-2CF4C1C54810}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6D16E90D-5DDD-429F-AC12-F90380F38B04}

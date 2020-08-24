@@ -27,8 +27,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Mimic.Application\Mimic.Application.csproj" />
+    <ProjectReference Include="..\Mimic.Domain\Mimic.Domain.csproj" />
     <ProjectReference Include="..\Mimic.Infra.Data\Mimic.Infra.Data.csproj" />
-    <ProjectReference Include="..\MimicAPI.Domain\Mimic.Domain.csproj" />
   </ItemGroup>
 
 

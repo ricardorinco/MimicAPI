@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MimicAPI.Domain\Mimic.Domain.csproj" />
+    <ProjectReference Include="..\Mimic.Domain\Mimic.Domain.csproj" />
   </ItemGroup>
 
 </Project>

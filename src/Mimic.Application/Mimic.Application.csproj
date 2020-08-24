@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Interfaces\Services\" />
+    <ProjectReference Include="..\Mimic.Domain\Mimic.Domain.csproj" />
   </ItemGroup>
 
 </Project>

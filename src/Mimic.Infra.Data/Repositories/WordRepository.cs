@@ -5,6 +5,7 @@ using Mimic.Domain.Models;
 using Mimic.Infra.Data.DataContext;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Mimic.Infra.Data.Repositories
 {
@@ -49,26 +50,17 @@ namespace Mimic.Infra.Data.Repositories
         }
         public Word GetById(int id)
         {
-            return mimicContext.Words.AsNoTracking().FirstOrDefault(x => x.Id == id);
+            return mimicContext.Words.Find(id);
         }
 
-        public void Add(Word word)
+        public async Task AddAsync(Word word)
         {
-            mimicContext.Words.Add(word);
-            mimicContext.SaveChanges();
+            await mimicContext.Words.AddAsync(word);
+            await mimicContext.SaveChangesAsync();
         }
-        public void Update(Word word)
+        public async Task UpdateAsync(Word word)
         {
-            mimicContext.Words.Update(word);
-            mimicContext.SaveChanges();
-        }
-        public void Delete(int id)
-        {
-            var foundWord = GetById(id);
-
-            foundWord.Active = false;
-            mimicContext.Words.Update(foundWord);
-            mimicContext.SaveChanges();
+            await mimicContext.SaveChangesAsync();
         }
     }
 }

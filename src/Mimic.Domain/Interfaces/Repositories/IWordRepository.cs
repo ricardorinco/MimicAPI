@@ -1,5 +1,6 @@
 ﻿using Mimic.Domain.Arguments;
 using Mimic.Domain.Models;
+using System.Threading.Tasks;
 
 namespace Mimic.Domain.Interfaces.Repositories
 {
@@ -8,8 +9,7 @@ namespace Mimic.Domain.Interfaces.Repositories
         PaginationList<Word> GetByQuery(WordQuery wordQuery);
         Word GetById(int id);
 
-        void Add(Word word);
-        void Update(Word word);
-        void Delete(int id);
+        Task AddAsync(Word word);
+        Task UpdateAsync(Word word);
     }
 }

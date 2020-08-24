@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Mimic.Application.Dtos.Words;
+using Mimic.Application.Services.Interfaces;
 using Mimic.Domain.Arguments;
 using Mimic.Domain.Interfaces.Repositories;
-using Mimic.Domain.Models;
 using Mimic.WebApi.Helpers;
 using Mimic.WebApi.V1.Models.Dtos;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Mimic.WebApi.V1.Controllers
 {
@@ -17,10 +18,15 @@ namespace Mimic.WebApi.V1.Controllers
     public class WordsController : ControllerBase
     {
         private readonly IWordRepository wordRepository;
+        private readonly IWordService wordService;
 
-        public WordsController(IWordRepository wordRepository)
+        public WordsController(
+            IWordRepository wordRepository,
+            IWordService wordService
+        )
         {
             this.wordRepository = wordRepository;
+            this.wordService = wordService;
         }
 
         /// <summary>
@@ -103,14 +109,14 @@ namespace Mimic.WebApi.V1.Controllers
         /// <summary>
         /// Adiciona uma nova palavra
         /// </summary>
-        /// <param name="word">Objeto de Palavra</param>
+        /// <param name="request">Objeto de request de palavra</param>
         /// <returns>Objeto de Palavra</returns>
         [HttpPost]
         [MapToApiVersion("1.0")]
         [MapToApiVersion("1.1")]
-        public IActionResult Add([FromBody] Word word)
+        public async Task<IActionResult> AddAsync([FromBody] AddWordRequestDto request)
         {
-            if (word == null)
+            if (request == null)
             {
                 return BadRequest();
             }
@@ -120,14 +126,11 @@ namespace Mimic.WebApi.V1.Controllers
                 return UnprocessableEntity(ModelState);
             }
 
-            word.CreatedAt = DateTime.Now;
-            word.Active = true;
-            wordRepository.Add(word);
+            var word = await wordService.AddAsync(request);
 
-            var wordDto = (WordDto)word;
-            wordDto.Links.Add(new Link("self", Url.Link("GetWord", new { id = wordDto.Id }), "GET"));
+            // word.Links.Add(new Link("self", Url.Link("GetWord", new { id = word.Id }), "GET"));
 
-            return Created($"api/words/{word.Id}", wordDto);
+            return Created($"api/words/{word.Id}", word);
         }
 
         /// <summary>
@@ -139,23 +142,20 @@ namespace Mimic.WebApi.V1.Controllers
         [HttpPut("{id}", Name = "UpdateWord")]
         [MapToApiVersion("1.0")]
         [MapToApiVersion("1.1")]
-        public IActionResult Update(int id, [FromBody] Word word)
+        public async Task<IActionResult> UpdateAsync(int id, [FromBody] UpdateWordRequestDto request)
         {
-            var foundWord = wordRepository.GetById(id);
+            if (request == null)
+            {
+                return BadRequest();
+            }
 
-            if (foundWord == null)
-                return NotFound();
+            request.Id = id;
 
-            word.Id = foundWord.Id;
-            word.CreatedAt = foundWord.CreatedAt;
-            word.Active = foundWord.Active;
-            word.UpdatedAt = DateTime.Now;
-            wordRepository.Update(word);
+            var word = await wordService.UpdateAsync(request);
 
-            var wordDto = (WordDto)word;
-            wordDto.Links.Add(new Link("self", Url.Link("GetWord", new { id = wordDto.Id }), "GET"));
+            // wordDto.Links.Add(new Link("self", Url.Link("GetWord", new { id = wordDto.Id }), "GET"));
 
-            return Ok(wordDto);
+            return Ok(word);
         }
 
         /// <summary>
@@ -165,14 +165,9 @@ namespace Mimic.WebApi.V1.Controllers
         /// <returns></returns>
         [HttpDelete("{id}", Name = "DeleteWord")]
         [MapToApiVersion("1.1")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> DeleteAsync(int id)
         {
-            var foundWord = wordRepository.GetById(id);
-
-            if (foundWord == null)
-                return NotFound();
-
-            wordRepository.Delete(id);
+            await wordService.DeleteAsync(id);
 
             return NoContent();
         }

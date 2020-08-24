@@ -18,14 +18,14 @@
             <param name="id">Id da palavra</param>
             <returns>Objeto de Palavra</returns>
         </member>
-        <member name="M:Mimic.WebApi.V1.Controllers.WordsController.Add(Mimic.Domain.Models.Word)">
+        <member name="M:Mimic.WebApi.V1.Controllers.WordsController.AddAsync(Mimic.Application.Dtos.Words.AddWordRequestDto)">
             <summary>
             Adiciona uma nova palavra
             </summary>
-            <param name="word">Objeto de Palavra</param>
+            <param name="request">Objeto de request de palavra</param>
             <returns>Objeto de Palavra</returns>
         </member>
-        <member name="M:Mimic.WebApi.V1.Controllers.WordsController.Update(System.Int32,Mimic.Domain.Models.Word)">
+        <member name="M:Mimic.WebApi.V1.Controllers.WordsController.UpdateAsync(System.Int32,Mimic.Application.Dtos.Words.UpdateWordRequestDto)">
             <summary>
             Atualiza uma palavra
             </summary>
@@ -33,7 +33,7 @@
             <param name="word">Objeto de Palavra à atualizar</param>
             <returns>Objeto de Palavra atualizado</returns>
         </member>
-        <member name="M:Mimic.WebApi.V1.Controllers.WordsController.Delete(System.Int32)">
+        <member name="M:Mimic.WebApi.V1.Controllers.WordsController.DeleteAsync(System.Int32)">
             <summary>
             Deleta uma palavra
             </summary>

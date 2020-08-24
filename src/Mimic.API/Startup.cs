@@ -6,6 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.OpenApi.Models;
+using Mimic.Application.Services;
+using Mimic.Application.Services.Interfaces;
 using Mimic.Domain.Interfaces.Repositories;
 using Mimic.Infra.Data.DataContext;
 using Mimic.Infra.Data.Repositories;
@@ -41,6 +43,8 @@ namespace Mimic.WebApi
             var caminhoArquivo = Path.Combine(caminhoProjeto, nomeProjeto);
 
             services.AddScoped<IWordRepository, WordRepository>();
+            services.AddScoped<IWordService, WordService>();
+
             services.AddSwaggerGen(cfg =>
             {
                 cfg.ResolveConflictingActions(apiDescription => apiDescription.First());
