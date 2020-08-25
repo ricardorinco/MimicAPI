@@ -1,12 +1,15 @@
 ﻿using Mimic.Application.Dtos.Words;
+using Mimic.Application.Interfaces;
 using Mimic.Domain.Models;
 using System;
 
 namespace Mimic.Application.Rules.Words.Update
 {
-    public static class R01UpdateWord
+    public class R01UpdateWord : IRuleHandler<UpdateWordRequestDto, Word>
     {
-        public static Word Apply(UpdateWordRequestDto request, Word foundWord)
+        public IRuleHandler<UpdateWordRequestDto, Word> Next { get; set; }
+
+        public Word Apply(UpdateWordRequestDto request, Word foundWord)
         {
             if (request == null)
             {

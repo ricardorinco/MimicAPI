@@ -1,6 +1,4 @@
-﻿using Mimic.Domain.Arguments;
-using System;
-using System.Collections.Generic;
+﻿using System;
 
 namespace Mimic.Domain.Models
 {

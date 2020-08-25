@@ -1,20 +1,24 @@
-﻿using Mimic.Domain.Models;
+﻿using Mimic.Application.Dtos.Words;
+using Mimic.Application.Interfaces;
+using Mimic.Domain.Models;
 using System;
 
 namespace Mimic.Application.Rules.Words.Update
 {
-    public static class R02AutoFillWord
+    public class R02AutoFillWord : IRuleHandler<UpdateWordRequestDto, Word>
     {
-        public static Word Apply(Word word)
+        public IRuleHandler<UpdateWordRequestDto, Word> Next { get; set; }
+
+        public Word Apply(UpdateWordRequestDto request, Word foundWord)
         {
-            if (word == null)
+            if (foundWord == null)
             {
                 return null;
             }
 
-            word.UpdatedAt = DateTime.Now;
+            foundWord.UpdatedAt = DateTime.Now;
 
-            return word;
+            return foundWord;
         }
     }
 }

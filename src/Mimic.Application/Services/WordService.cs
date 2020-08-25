@@ -33,10 +33,9 @@ namespace Mimic.Application.Services
         public async Task<Word> UpdateAsync(UpdateWordRequestDto request)
         {
             var foundWord = wordRepository.GetById(request.Id);
-
-            var word = R01UpdateWord.Apply(request, foundWord);
-            word = R02AutoFillWord.Apply(word);
             
+            var word = R00UpdateWordRules.ApplyRules(request, foundWord);
+
             await wordRepository.UpdateAsync(word);
 
             return word;
