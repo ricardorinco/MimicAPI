@@ -1,10 +1,11 @@
 ﻿using Mimic.Application.Dtos.Words;
 using Mimic.Application.Rules.Words;
 using Mimic.Application.Rules.Words.Update;
-using Mimic.Application.Services.Interfaces;
+using Mimic.Application.Interfaces;
 using Mimic.Domain.Interfaces.Repositories;
 using Mimic.Domain.Models;
 using System.Threading.Tasks;
+using Mimic.Application.Rules.Words.Add;
 
 namespace Mimic.Application.Services
 {
@@ -22,19 +23,19 @@ namespace Mimic.Application.Services
             return wordRepository.GetById(id);
         }
 
-        public async Task<Word> AddAsync(AddWordRequestDto request)
+        public async Task<Word> AddAsync(AddWordRuleDto ruleDto)
         {
-            var word = AddWordRule.Apply(request);
+            var word = R00AddWordRules.ApplyRules(ruleDto, new Word());
 
             await wordRepository.AddAsync(word);
 
             return word;
         }
-        public async Task<Word> UpdateAsync(UpdateWordRequestDto request)
+        public async Task<Word> UpdateAsync(UpdateWordRuleDto ruleDto)
         {
-            var foundWord = wordRepository.GetById(request.Id);
+            var foundWord = wordRepository.GetById(ruleDto.Id);
             
-            var word = R00UpdateWordRules.ApplyRules(request, foundWord);
+            var word = R00UpdateWordRules.ApplyRules(ruleDto, foundWord);
 
             await wordRepository.UpdateAsync(word);
 

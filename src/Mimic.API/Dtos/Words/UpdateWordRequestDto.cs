@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Mimic.Application.Dtos.Words
+namespace Mimic.WebApi.Dtos.Words
 {
     public class UpdateWordRequestDto
     {

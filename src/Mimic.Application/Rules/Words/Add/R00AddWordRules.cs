@@ -4,14 +4,14 @@ using Mimic.Domain.Models;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Mimic.Application.Rules.Words.Update
+namespace Mimic.Application.Rules.Words.Add
 {
-    public class R00UpdateWordRules
+    public class R00AddWordRules
     {
-        public static Word ApplyRules(UpdateWordRuleDto ruleDto, Word word)
+        public static Word ApplyRules(AddWordRuleDto ruleDto, Word word)
         {
-            var rulesHandler = new List<IRuleHandler<UpdateWordRuleDto, Word>>();
-            rulesHandler.Add(new R01UpdateWord());
+            var rulesHandler = new List<IRuleHandler<AddWordRuleDto, Word>>();
+            rulesHandler.Add(new R01CreateWord());
             rulesHandler.Add(new R02AutoFillWord());
 
             foreach (var rule in rulesHandler)

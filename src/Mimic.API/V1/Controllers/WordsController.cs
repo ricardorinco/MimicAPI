@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Mimic.Application.Dtos.Words;
-using Mimic.Application.Services.Interfaces;
+using Mimic.Application.Interfaces;
 using Mimic.Domain.Arguments;
 using Mimic.Domain.Interfaces.Repositories;
+using Mimic.WebApi.Dtos.Words;
 using Mimic.WebApi.Helpers;
+using Mimic.WebApi.Helpers.Mappers;
 using Mimic.WebApi.V1.Models.Dtos;
 using Newtonsoft.Json;
 using System.Collections.Generic;
@@ -126,7 +127,8 @@ namespace Mimic.WebApi.V1.Controllers
                 return UnprocessableEntity(ModelState);
             }
 
-            var word = await wordService.AddAsync(request);
+            var ruleDto = WordMappers.AddWordRequestDtoToAddWordRuleDto(request);
+            var word = await wordService.AddAsync(ruleDto);
 
             // word.Links.Add(new Link("self", Url.Link("GetWord", new { id = word.Id }), "GET"));
 
@@ -151,7 +153,8 @@ namespace Mimic.WebApi.V1.Controllers
 
             request.Id = id;
 
-            var word = await wordService.UpdateAsync(request);
+            var ruleDto = WordMappers.UpdateWordRequestDtoToUpdateWordRuleDto(request);
+            var word = await wordService.UpdateAsync(ruleDto);
 
             // wordDto.Links.Add(new Link("self", Url.Link("GetWord", new { id = wordDto.Id }), "GET"));
 

@@ -5,17 +5,12 @@ using System;
 
 namespace Mimic.Application.Rules.Words.Update
 {
-    public class R02AutoFillWord : IRuleHandler<UpdateWordRequestDto, Word>
+    public class R02AutoFillWord : IRuleHandler<UpdateWordRuleDto, Word>
     {
-        public IRuleHandler<UpdateWordRequestDto, Word> Next { get; set; }
+        public IRuleHandler<UpdateWordRuleDto, Word> Next { get; set; }
 
-        public Word Apply(UpdateWordRequestDto request, Word foundWord)
+        public Word Apply(UpdateWordRuleDto ruleDto, Word foundWord)
         {
-            if (foundWord == null)
-            {
-                return null;
-            }
-
             foundWord.UpdatedAt = DateTime.Now;
 
             return foundWord;

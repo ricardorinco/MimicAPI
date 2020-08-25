@@ -2,10 +2,10 @@
 
 namespace Mimic.Application.Interfaces
 {
-    public interface IRuleHandler<Request, Entity>
+    public interface IRuleHandler<EntityDto, Entity>
     {
-        IRuleHandler<Request, Entity> Next { get; set; }
+        IRuleHandler<EntityDto, Entity> Next { get; set; }
 
-        Word Apply(Request request, Entity entity);
+        Word Apply(EntityDto entityDto, Entity entity);
     }
 }

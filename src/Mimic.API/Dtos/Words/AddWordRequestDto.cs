@@ -1,6 +1,6 @@
-﻿namespace Mimic.Application.Dtos.Words
+﻿namespace Mimic.WebApi.Dtos.Words
 {
-    public class AddWordRuleDto
+    public class AddWordRequestDto
     {
         public string Description { get; set; }
         public int Points { get; set; }

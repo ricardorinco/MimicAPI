@@ -18,14 +18,14 @@
             <param name="id">Id da palavra</param>
             <returns>Objeto de Palavra</returns>
         </member>
-        <member name="M:Mimic.WebApi.V1.Controllers.WordsController.AddAsync(Mimic.Application.Dtos.Words.AddWordRequestDto)">
+        <member name="M:Mimic.WebApi.V1.Controllers.WordsController.AddAsync(Mimic.WebApi.Dtos.Words.AddWordRequestDto)">
             <summary>
             Adiciona uma nova palavra
             </summary>
             <param name="request">Objeto de request de palavra</param>
             <returns>Objeto de Palavra</returns>
         </member>
-        <member name="M:Mimic.WebApi.V1.Controllers.WordsController.UpdateAsync(System.Int32,Mimic.Application.Dtos.Words.UpdateWordRequestDto)">
+        <member name="M:Mimic.WebApi.V1.Controllers.WordsController.UpdateAsync(System.Int32,Mimic.WebApi.Dtos.Words.UpdateWordRequestDto)">
             <summary>
             Atualiza uma palavra
             </summary>

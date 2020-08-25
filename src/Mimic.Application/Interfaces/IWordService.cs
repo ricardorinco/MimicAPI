@@ -2,7 +2,7 @@
 using Mimic.Domain.Models;
 using System.Threading.Tasks;
 
-namespace Mimic.Application.Services.Interfaces
+namespace Mimic.Application.Interfaces
 {
     public interface IWordService
     {
@@ -11,16 +11,16 @@ namespace Mimic.Application.Services.Interfaces
         /// <summary>
         /// Adiciona uma nova palavra
         /// </summary>
-        /// <param name="request">Request para adicionar uma nova palavra</param>
+        /// <param name="ruleDto">AddWordRuleDto para adicionar uma nova palavra</param>
         /// <returns>Palavra adicionada</returns>
-        Task<Word> AddAsync(AddWordRequestDto request);
+        Task<Word> AddAsync(AddWordRuleDto ruleDto);
 
         /// <summary>
         /// Atualiza uma palavra existente
         /// </summary>
-        /// <param name="request">Request para atualziar uma palavra</param>
+        /// <param name="ruleDto">UpdateWordRuleDto para atualizar uma palavra</param>
         /// <returns>Objeto de palavra atualizado</returns>
-        Task<Word> UpdateAsync(UpdateWordRequestDto request);
+        Task<Word> UpdateAsync(UpdateWordRuleDto ruleDto);
 
         /// <summary>
         /// Exclusão lógica de uma palavra
