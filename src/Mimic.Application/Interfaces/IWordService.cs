@@ -6,27 +6,26 @@ namespace Mimic.Application.Interfaces
 {
     public interface IWordService
     {
-        Word GetByIdAsync(int id);
+        Word GetById(int id);
 
         /// <summary>
         /// Adiciona uma nova palavra
         /// </summary>
-        /// <param name="ruleDto">AddWordRuleDto para adicionar uma nova palavra</param>
+        /// <param name="ruleDto">Objeto AddWordRuleDto</param>
         /// <returns>Palavra adicionada</returns>
         Task<Word> AddAsync(AddWordRuleDto ruleDto);
 
         /// <summary>
         /// Atualiza uma palavra existente
         /// </summary>
-        /// <param name="ruleDto">UpdateWordRuleDto para atualizar uma palavra</param>
+        /// <param name="ruleDto">Objeto UpdateWordRuleDto</param>
         /// <returns>Objeto de palavra atualizado</returns>
         Task<Word> UpdateAsync(UpdateWordRuleDto ruleDto);
 
         /// <summary>
         /// Exclusão lógica de uma palavra
         /// </summary>
-        /// <param name="id">Id do registro</param>
-        /// <returns></returns>
-        Task DeleteAsync(int id);
+        /// <param name="ruleDto">Objeto DeleteWordRuleDto</param>
+        Task DeleteAsync(DeleteWordRuleDto ruleDto);
     }
 }

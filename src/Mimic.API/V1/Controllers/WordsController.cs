@@ -170,7 +170,8 @@ namespace Mimic.WebApi.V1.Controllers
         [MapToApiVersion("1.1")]
         public async Task<IActionResult> DeleteAsync(int id)
         {
-            await wordService.DeleteAsync(id);
+            var ruleDto = WordMappers.DeleteWordRequestDtoToDeleteWordRuleDto(id);
+            await wordService.DeleteAsync(ruleDto);
 
             return NoContent();
         }

@@ -1,7 +1,6 @@
 ﻿using Mimic.Application.Dtos.Words;
 using Mimic.Application.Interfaces;
 using Mimic.Application.Rules;
-using Mimic.Application.Rules.Words;
 using Mimic.Domain.Interfaces.Repositories;
 using Mimic.Domain.Models;
 using System.Threading.Tasks;
@@ -17,7 +16,7 @@ namespace Mimic.Application.Services
             this.wordRepository = wordRepository;
         }
 
-        public Word GetByIdAsync(int id)
+        public Word GetById(int id)
         {
             return wordRepository.GetById(id);
         }
@@ -33,7 +32,7 @@ namespace Mimic.Application.Services
         }
         public async Task<Word> UpdateAsync(UpdateWordRuleDto ruleDto)
         {
-            var foundWord = wordRepository.GetById(ruleDto.Id);
+            var foundWord = GetById(ruleDto.Id);
             
             var word = ApplyRulesHandler<UpdateWordRuleDto, Word>
                 .ApplyRules(ruleDto, foundWord, "Words.Update");
@@ -42,12 +41,14 @@ namespace Mimic.Application.Services
 
             return word;
         }
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(DeleteWordRuleDto ruleDto)
         {
-            var foundWord = wordRepository.GetById(id);
+            var foundWord = GetById(ruleDto.Id);
 
-            DeleteWordRule.Apply(foundWord);
-            await wordRepository.UpdateAsync(foundWord);
+            var word = ApplyRulesHandler<DeleteWordRuleDto, Word>
+                .ApplyRules(ruleDto, foundWord, "Words.Delete");
+
+            await wordRepository.UpdateAsync(word);
         }
     }
 }

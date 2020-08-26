@@ -14,6 +14,14 @@ namespace Mimic.WebApi.Helpers.Mappers
             };
         }
 
+        public static DeleteWordRuleDto DeleteWordRequestDtoToDeleteWordRuleDto(int id)
+        {
+            return new DeleteWordRuleDto
+            {
+                Id = id
+            };
+        }
+
         public static UpdateWordRuleDto UpdateWordRequestDtoToUpdateWordRuleDto(UpdateWordRequestDto dto)
         {
             return new UpdateWordRuleDto
