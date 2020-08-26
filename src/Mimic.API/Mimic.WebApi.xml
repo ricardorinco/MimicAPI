@@ -11,34 +11,33 @@
             <param name="query">Filtros de pesquisa</param>
             <returns>Lista de palavras</returns>
         </member>
-        <member name="M:Mimic.WebApi.V1.Controllers.WordsController.Get(System.Int32)">
+        <member name="M:Mimic.WebApi.V1.Controllers.WordsController.GetByIdAsync(System.Int32)">
             <summary>
-            Obtêm uma palavra por id
+            Realiza a busca de uma palavra através do Id informado
             </summary>
             <param name="id">Id da palavra</param>
-            <returns>Objeto de Palavra</returns>
+            <returns>Palavra encontrada</returns>
         </member>
         <member name="M:Mimic.WebApi.V1.Controllers.WordsController.AddAsync(Mimic.WebApi.Dtos.Words.AddWordRequestDto)">
             <summary>
-            Adiciona uma nova palavra
+            Realiza a inclusão da palavra informada
             </summary>
-            <param name="request">Objeto de request de palavra</param>
+            <param name="requestDto">Objeto AddWordRequestDto</param>
             <returns>Objeto de Palavra</returns>
         </member>
         <member name="M:Mimic.WebApi.V1.Controllers.WordsController.UpdateAsync(System.Int32,Mimic.WebApi.Dtos.Words.UpdateWordRequestDto)">
             <summary>
-            Atualiza uma palavra
+            Realiza a atualização da palavra informada
             </summary>
             <param name="id">Id da palavra</param>
-            <param name="word">Objeto de Palavra à atualizar</param>
-            <returns>Objeto de Palavra atualizado</returns>
+            <param name="requestDto">Objeto UpdateWordRequestDto</param>
+            <returns>Palavra atualizada</returns>
         </member>
         <member name="M:Mimic.WebApi.V1.Controllers.WordsController.DeleteAsync(System.Int32)">
             <summary>
-            Deleta uma palavra
+            Realiza a exclusão de uma palavra através do Id informado
             </summary>
             <param name="id">Id da palavra</param>
-            <returns></returns>
         </member>
     </members>
 </doc>

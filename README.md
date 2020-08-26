@@ -1,3 +1,5 @@
+> "Restaurarei o exausto e saciarei o enfraquecido". **Jeremias 31:25 NVI**
+
 # Mimic API
 
 Este é um projeto de uma api para um app de mimicas.
