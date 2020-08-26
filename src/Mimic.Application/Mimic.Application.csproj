@@ -7,6 +7,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Mimic.Domain\Mimic.Domain.csproj" />
+    <ProjectReference Include="..\Mimic.Infra.Data\Mimic.Infra.Data.csproj" />
   </ItemGroup>
 
 </Project>

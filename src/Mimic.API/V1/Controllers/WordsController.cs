@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Mimic.Application.Interfaces;
 using Mimic.Domain.Arguments;
-using Mimic.Domain.Interfaces.Repositories;
+using Mimic.Infra.Data.Interfaces;
 using Mimic.WebApi.Dtos.Words;
 using Mimic.WebApi.Helpers;
 using Mimic.WebApi.Helpers.Mappers;
@@ -83,17 +83,23 @@ namespace Mimic.WebApi.V1.Controllers
             return Ok(wordPaginationDto);
         }
 
+
+
+
+
+
+
         /// <summary>
-        /// Obtêm uma palavra por id
+        /// Realiza a busca de uma palavra através do Id informado
         /// </summary>
         /// <param name="id">Id da palavra</param>
-        /// <returns>Objeto de Palavra</returns>
+        /// <returns>Palavra encontrada</returns>
         [HttpGet("{id}", Name = "GetWord")]
         [MapToApiVersion("1.0")]
         [MapToApiVersion("1.1")]
-        public IActionResult Get(int id)
+        public async Task<IActionResult> GetByIdAsync(int id)
         {
-            var foundWord = wordRepository.GetById(id);
+            var foundWord = await wordService.GetByIdAsync(id);
 
             if (foundWord == null)
                 return NotFound();
@@ -108,16 +114,16 @@ namespace Mimic.WebApi.V1.Controllers
         }
 
         /// <summary>
-        /// Adiciona uma nova palavra
+        /// Realiza a inclusão da palavra informada
         /// </summary>
-        /// <param name="request">Objeto de request de palavra</param>
+        /// <param name="requestDto">Objeto AddWordRequestDto</param>
         /// <returns>Objeto de Palavra</returns>
         [HttpPost]
         [MapToApiVersion("1.0")]
         [MapToApiVersion("1.1")]
-        public async Task<IActionResult> AddAsync([FromBody] AddWordRequestDto request)
+        public async Task<IActionResult> AddAsync([FromBody] AddWordRequestDto requestDto)
         {
-            if (request == null)
+            if (requestDto == null)
             {
                 return BadRequest();
             }
@@ -127,7 +133,7 @@ namespace Mimic.WebApi.V1.Controllers
                 return UnprocessableEntity(ModelState);
             }
 
-            var ruleDto = WordMappers.AddWordRequestDtoToAddWordRuleDto(request);
+            var ruleDto = WordMappers.AddWordRequestDtoToAddWordRuleDto(requestDto);
             var word = await wordService.AddAsync(ruleDto);
 
             // word.Links.Add(new Link("self", Url.Link("GetWord", new { id = word.Id }), "GET"));
@@ -136,24 +142,23 @@ namespace Mimic.WebApi.V1.Controllers
         }
 
         /// <summary>
-        /// Atualiza uma palavra
+        /// Realiza a atualização da palavra informada
         /// </summary>
         /// <param name="id">Id da palavra</param>
-        /// <param name="word">Objeto de Palavra à atualizar</param>
-        /// <returns>Objeto de Palavra atualizado</returns>
+        /// <param name="requestDto">Objeto UpdateWordRequestDto</param>
+        /// <returns>Palavra atualizada</returns>
         [HttpPut("{id}", Name = "UpdateWord")]
         [MapToApiVersion("1.0")]
         [MapToApiVersion("1.1")]
-        public async Task<IActionResult> UpdateAsync(int id, [FromBody] UpdateWordRequestDto request)
+        public async Task<IActionResult> UpdateAsync(int id, [FromBody] UpdateWordRequestDto requestDto)
         {
-            if (request == null)
+            if (requestDto == null)
             {
                 return BadRequest();
             }
 
-            request.Id = id;
-
-            var ruleDto = WordMappers.UpdateWordRequestDtoToUpdateWordRuleDto(request);
+            requestDto.Id = id;
+            var ruleDto = WordMappers.UpdateWordRequestDtoToUpdateWordRuleDto(requestDto);
             var word = await wordService.UpdateAsync(ruleDto);
 
             // wordDto.Links.Add(new Link("self", Url.Link("GetWord", new { id = wordDto.Id }), "GET"));
@@ -162,10 +167,9 @@ namespace Mimic.WebApi.V1.Controllers
         }
 
         /// <summary>
-        /// Deleta uma palavra
+        /// Realiza a exclusão de uma palavra através do Id informado
         /// </summary>
         /// <param name="id">Id da palavra</param>
-        /// <returns></returns>
         [HttpDelete("{id}", Name = "DeleteWord")]
         [MapToApiVersion("1.1")]
         public async Task<IActionResult> DeleteAsync(int id)

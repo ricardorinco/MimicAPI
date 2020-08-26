@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Mimic.Domain.Arguments;
-using Mimic.Domain.Interfaces.Repositories;
 using Mimic.Domain.Models;
 using Mimic.Infra.Data.DataContext;
+using Mimic.Infra.Data.Interfaces;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -48,9 +48,9 @@ namespace Mimic.Infra.Data.Repositories
 
             return paginationList;
         }
-        public Word GetById(int id)
+        public async Task<Word> GetByIdAsync(int id)
         {
-            return mimicContext.Words.Find(id);
+            return await mimicContext.Words.FindAsync(id);
         }
 
         public async Task AddAsync(Word word)
