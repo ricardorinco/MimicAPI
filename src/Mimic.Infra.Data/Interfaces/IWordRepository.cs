@@ -1,12 +1,25 @@
-﻿using Mimic.Domain.Arguments;
-using Mimic.Domain.Models;
+﻿using Mimic.Domain.Models;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Mimic.Infra.Data.Interfaces
 {
     public interface IWordRepository
     {
-        PaginationList<Word> GetByQuery(WordQuery wordQuery);
+        /// <summary>
+        /// Realiza uma consulta de palavras de acordo com os filtros informados
+        /// </summary>
+        /// <param name="createdDate">Data de criação da palavra</param>
+        /// <param name="currentPage">Número da página atual</param>
+        /// <param name="pageSize">Número de itens por página</param>
+        /// <returns>Lista das palavras encontradas</returns>
+        Task<IList<Word>> GetByQueryAsync
+        (
+            DateTime createdDate,
+            int currentPage,
+            int pageSize
+        );
 
         /// <summary>
         /// Realiza a busca de uma palavra através do Id informado

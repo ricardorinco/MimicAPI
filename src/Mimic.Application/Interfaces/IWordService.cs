@@ -1,11 +1,22 @@
 ﻿using Mimic.Application.Dtos.Words;
 using Mimic.Domain.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Mimic.Application.Interfaces
 {
+    /// <summary>
+    /// Serviço de Palavras
+    /// </summary>
     public interface IWordService
     {
+        /// <summary>
+        /// Realiza uma consulta de palavras de acordo com os filtros informados
+        /// </summary>
+        /// <param name="ruleDto">Objeto QueryWordRuleDto</param>
+        /// <returns>Lista das palavras encontradas</returns>
+        Task<IList<Word>> GetByQueryAsync(QueryWordRuleDto ruleDto);
+
         /// <summary>
         /// Realiza a busca de uma palavra através do Id informado
         /// </summary>

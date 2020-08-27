@@ -1,11 +1,9 @@
-﻿using Mimic.Domain.Models;
-
-namespace Mimic.Application.Interfaces
+﻿namespace Mimic.Application.Interfaces
 {
     public interface IRuleHandler<EntityDto, Entity>
     {
         IRuleHandler<EntityDto, Entity> Next { get; set; }
 
-        Word Apply(EntityDto entityDto, Entity entity);
+        Entity Apply(EntityDto entityDto, Entity entity);
     }
 }

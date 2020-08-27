@@ -1,57 +1,54 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Mimic.Application.Interfaces;
 using Mimic.Domain.Arguments;
-using Mimic.Infra.Data.Interfaces;
 using Mimic.WebApi.Dtos.Words;
-using Mimic.WebApi.Helpers;
 using Mimic.WebApi.Helpers.Mappers;
 using Mimic.WebApi.V1.Models.Dtos;
-using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Mimic.WebApi.V1.Controllers
 {
+    /// <summary>
+    /// Controller de palavras
+    /// </summary>
     [ApiController]
     [Route("api/v{version:apiVersion}/words")]
     [ApiVersion("1", Deprecated = true)]
     [ApiVersion("1.1")]
     public class WordsController : ControllerBase
     {
-        private readonly IWordRepository wordRepository;
         private readonly IWordService wordService;
 
-        public WordsController(
-            IWordRepository wordRepository,
-            IWordService wordService
-        )
+        /// <summary>
+        /// Construtor da classe
+        /// </summary>
+        /// <param name="wordService">Implementação de IWordService</param>
+        public WordsController(IWordService wordService)
         {
-            this.wordRepository = wordRepository;
             this.wordService = wordService;
         }
 
         /// <summary>
-        /// Obtêm todas as palavras
+        /// Realiza uma consulta de palavras de acordo com os filtros informados
         /// </summary>
-        /// <param name="query">Filtros de pesquisa</param>
-        /// <returns>Lista de palavras</returns>
+        /// <param name="requestDto">Objeto QueryWordRequestDto</param>
+        /// <returns>Lista das palavras encontradas</returns>
         [HttpGet("", Name = "GetAllBySearch")]
         [MapToApiVersion("1.0")]
         [MapToApiVersion("1.1")]
-        public IActionResult GetAllBySearch([FromQuery] WordQuery query)
+        public async Task<IActionResult> GetAllBySearch([FromQuery] QueryWordRequestDto requestDto)
         {
-            query.Page = query.Page.HasValue ? query.Page.Value : 1;
-            query.DataAmount = query.DataAmount.HasValue ? query.DataAmount.Value : 10;
+            var ruleDto = WordMappers.QueryWordequestDtoToQueryWordRuleDto(requestDto);
+            var words = await wordService.GetByQueryAsync(ruleDto);
 
-            var words = wordRepository.GetByQuery(query);
-
-            if (words.Results.Count == 0)
+            if (words.Count == 0)
             {
                 return NotFound();
             }
 
-            var wordPaginationDto = new PaginationList<WordDto>();
-            foreach (var word in words.Results)
+            var wordsDto = new List<WordDto>();
+            foreach (var word in words)
             {
                 var wordDto = (WordDto)word;
                 wordDto.Links = new List<Link>();
@@ -59,35 +56,11 @@ namespace Mimic.WebApi.V1.Controllers
                 wordDto.Links.Add(new Link("update", Url.Link("UpdateWord", new { id = wordDto.Id }), "PUT"));
                 wordDto.Links.Add(new Link("delete", Url.Link("DeleteWord", new { id = wordDto.Id }), "DELETE"));
 
-                wordPaginationDto.Results.Add(wordDto);
+                wordsDto.Add(wordDto);
             }
 
-            if (words.Pagination != null)
-            {
-                Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(words.Pagination));
-
-                if (query.Page + 1 <= words.Pagination.Total)
-                {
-                    var queryString = new WordUrlQuery() { Page = query.Page + 1, DataAmount = query.DataAmount, SearchDate = query.SearchDate };
-                    wordPaginationDto.Links.Add(new Link("next", Url.Link("GetAllBySearch", queryString), "GET"));
-                }
-
-                if (query.Page + 1 > 0)
-                {
-                    var queryString = new WordUrlQuery() { Page = query.Page - 1, DataAmount = query.DataAmount, SearchDate = query.SearchDate };
-                    wordPaginationDto.Links.Add(new Link("previous", Url.Link("GetAllBySearch", queryString), "GET"));
-                }
-
-            }
-
-            return Ok(wordPaginationDto);
+            return Ok(wordsDto);
         }
-
-
-
-
-
-
 
         /// <summary>
         /// Realiza a busca de uma palavra através do Id informado

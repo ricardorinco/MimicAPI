@@ -3,6 +3,7 @@ using Mimic.Application.Interfaces;
 using Mimic.Application.Rules;
 using Mimic.Domain.Models;
 using Mimic.Infra.Data.Interfaces;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Mimic.Application.Services
@@ -14,6 +15,18 @@ namespace Mimic.Application.Services
         public WordService(IWordRepository wordRepository)
         {
             this.wordRepository = wordRepository;
+        }
+
+        public async Task<IList<Word>> GetByQueryAsync(QueryWordRuleDto ruleDto)
+        {
+            ruleDto = ApplyRulesHandler<QueryWordRuleDto, QueryWordRuleDto>
+                .ApplyRules(ruleDto, ruleDto, "Words.Query");
+
+            return await wordRepository.GetByQueryAsync(
+                ruleDto.CreatedDate.Value,
+                ruleDto.CurrentPage.Value,
+                ruleDto.PageSize.Value
+            );
         }
 
         public async Task<Word> GetByIdAsync(int id)
