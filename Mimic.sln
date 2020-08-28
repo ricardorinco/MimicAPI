@@ -23,7 +23,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4 - Infra", "4 - Infra", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Application", "2 - Application", "{7E8CB57F-0E87-4387-9E5B-2CF4C1C54810}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mimic.Application", "src\Mimic.Application\Mimic.Application.csproj", "{49A6FD38-03E2-4D9A-9A44-14AD472D0E33}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mimic.Application", "src\Mimic.Application\Mimic.Application.csproj", "{49A6FD38-03E2-4D9A-9A44-14AD472D0E33}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
