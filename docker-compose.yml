@@ -1,0 +1,13 @@
+version: '3.4'
+
+services:
+  mimic.api:
+    image: mimicapi
+    build:
+      context: .
+      dockerfile: src/Mimic.API/Dockerfile
+    environment:
+      - ConnectionStrings__SQLite=Data Source=Mimic.db
+      - SwaggerEnabled=false
+    ports:
+      - "443:80"

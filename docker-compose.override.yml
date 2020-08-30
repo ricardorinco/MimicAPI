@@ -1,0 +1,11 @@
+version: '3.4'
+
+services:
+  mimic.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_HTTPS_PORT=44367
+    ports:
+      - "52624:80"
+      - "44367:443"
