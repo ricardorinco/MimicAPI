@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -28,6 +29,12 @@ namespace Mimic.WebApi
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddOptions();
+
+            services.Configure<MimicApiSettings>(Configuration);
+
+            var settings = Configuration.Get<MimicApiSettings>();
+
             services.AddSingleton(Configuration);
 
             services.AddControllers();
@@ -45,35 +52,48 @@ namespace Mimic.WebApi
             services.AddScoped<IWordRepository, WordRepository>();
             services.AddScoped<IWordService, WordService>();
 
-            services.AddSwaggerGen(cfg =>
+            if (settings.SwaggerEnabled)
             {
-                cfg.ResolveConflictingActions(apiDescription => apiDescription.First());
-                cfg.SwaggerDoc("v2", new OpenApiInfo { Title = "Mimic API", Version = "v2" });
-                cfg.SwaggerDoc("v1.1", new OpenApiInfo { Title = "Mimic API", Version = "v1.1" });
-                cfg.SwaggerDoc("v1", new OpenApiInfo { Title = "Mimic API", Version = "v1" });
-                cfg.IncludeXmlComments(caminhoArquivo);
-                cfg.DocInclusionPredicate((docName, apiDesc) =>
+                services.AddSwaggerGen(cfg =>
                 {
-                    var actionApiVersionModel = apiDesc.ActionDescriptor?.GetApiVersion();
-                    if (actionApiVersionModel == null)
+                    cfg.ResolveConflictingActions(apiDescription => apiDescription.First());
+                    cfg.SwaggerDoc("v2", new OpenApiInfo { Title = "Mimic API", Version = "v2" });
+                    cfg.SwaggerDoc("v1.1", new OpenApiInfo { Title = "Mimic API", Version = "v1.1" });
+                    cfg.SwaggerDoc("v1", new OpenApiInfo { Title = "Mimic API", Version = "v1" });
+                    cfg.IncludeXmlComments(caminhoArquivo);
+                    cfg.DocInclusionPredicate((docName, apiDesc) =>
                     {
-                        return true;
-                    }
+                        var actionApiVersionModel = apiDesc.ActionDescriptor?.GetApiVersion();
+                        if (actionApiVersionModel == null)
+                        {
+                            return true;
+                        }
 
-                    if (actionApiVersionModel.DeclaredApiVersions.Any())
-                    {
-                        return actionApiVersionModel.DeclaredApiVersions.Any(v => $"v{v}" == docName);
-                    }
+                        if (actionApiVersionModel.DeclaredApiVersions.Any())
+                        {
+                            return actionApiVersionModel.DeclaredApiVersions.Any(v => $"v{v}" == docName);
+                        }
 
-                    return actionApiVersionModel.ImplementedApiVersions.Any(v => $"v{v}" == docName);
+                        return actionApiVersionModel.ImplementedApiVersions.Any(v => $"v{v}" == docName);
+                    });
+                    cfg.OperationFilter<RemoveVersionParameterFilter>();
+                    cfg.DocumentFilter<ReplaceVersionWithExactValueInPathFilter>();
                 });
-                cfg.OperationFilter<RemoveVersionParameterFilter>();
-                cfg.DocumentFilter<ReplaceVersionWithExactValueInPathFilter>();
-            });
+            }
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            UpdateDatabase(app);
+
+            var settings = Configuration.Get<MimicApiSettings>();
+
+            var configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json")
+                .AddEnvironmentVariables()
+                .Build();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -84,18 +104,34 @@ namespace Mimic.WebApi
             app.UseAuthorization();
             app.UseStatusCodePages();
 
-            app.UseSwagger();
-            app.UseSwaggerUI(cfg => {
-                cfg.SwaggerEndpoint("/swagger/v2/swagger.json", "Mimic API - v2");
-                cfg.SwaggerEndpoint("/swagger/v1.1/swagger.json", "Mimic API - v1.1");
-                cfg.SwaggerEndpoint("/swagger/v1/swagger.json", "Mimic API - v1");
-                cfg.RoutePrefix = string.Empty;
-            });
+            if (settings.SwaggerEnabled)
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI(cfg => {
+                    cfg.SwaggerEndpoint("/swagger/v2/swagger.json", "Mimic API - v2");
+                    cfg.SwaggerEndpoint("/swagger/v1.1/swagger.json", "Mimic API - v1.1");
+                    cfg.SwaggerEndpoint("/swagger/v1/swagger.json", "Mimic API - v1");
+                    cfg.RoutePrefix = string.Empty;
+                });
+            }
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+        }
+
+        private static void UpdateDatabase(IApplicationBuilder app)
+        {
+            using (var serviceScope = app.ApplicationServices
+                .GetRequiredService<IServiceScopeFactory>()
+                .CreateScope())
+            {
+                using (var context = serviceScope.ServiceProvider.GetService<MimicContext>())
+                {
+                    context.Database.Migrate();
+                }
+            }
         }
     }
 }

@@ -58,6 +58,16 @@
             <param name="dto">Objeto de UpdateWordRequestDto</param>
             <returns>Objeto de UpdateWordRuleDto</returns>
         </member>
+        <member name="T:Mimic.WebApi.MimicApiSettings">
+            <summary>
+            Configurações da aplicação
+            </summary>
+        </member>
+        <member name="P:Mimic.WebApi.MimicApiSettings.SwaggerEnabled">
+            <summary>
+            Propriedade de exibição do Swagger
+            </summary>
+        </member>
         <member name="T:Mimic.WebApi.V1.Controllers.WordsController">
             <summary>
             Controller de palavras

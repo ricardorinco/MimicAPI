@@ -17,4 +17,8 @@
     <ProjectReference Include="..\Mimic.Domain\Mimic.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DataContext\Database\" />
+  </ItemGroup>
+
 </Project>

@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Mimic.Domain.Models;
-using System;
 
 namespace Mimic.Infra.Data.DataContext
 {
@@ -19,20 +18,14 @@ namespace Mimic.Infra.Data.DataContext
 
         protected override void OnConfiguring(DbContextOptionsBuilder dbContextOptionsBuilder)
         {
-            dbContextOptionsBuilder.UseSqlite(DataSource());
+            var connectionString = configuration.GetConnectionString("SQLite");
+
+            dbContextOptionsBuilder.UseSqlite(connectionString);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-        }
-
-        private string DataSource()
-        {
-            var path = configuration.GetSection("SQLite").GetSection("Path").Value;
-            var database = configuration.GetSection("SQLite").GetSection("Database").Value;
-
-            return $"Data Source={path}\\{database}";
         }
     }
 }
