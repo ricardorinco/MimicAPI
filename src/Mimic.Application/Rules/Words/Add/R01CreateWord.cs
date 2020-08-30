@@ -13,7 +13,7 @@ namespace Mimic.Application.Rules.Words.Add
             word.Description = ruleDto.Description;
             word.Points = ruleDto.Points;
 
-            return word;
+            return Next.Apply(ruleDto, word);
         }
     }
 }

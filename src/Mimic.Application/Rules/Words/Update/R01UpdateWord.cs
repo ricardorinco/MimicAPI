@@ -14,7 +14,7 @@ namespace Mimic.Application.Rules.Words.Update
             foundWord.Points = ruleDto.Points;
             foundWord.Active = ruleDto.Active;
 
-            return foundWord;
+            return Next.Apply(ruleDto, foundWord);
         }
     }
 }
