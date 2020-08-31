@@ -6,7 +6,9 @@ services:
     build:
       context: .
       dockerfile: src/Mimic.API/Dockerfile
+    container_name: mimicapi
     environment:
+      - ASPNETCORE_ENVIRONMENT=Stage
       - ConnectionStrings__SQLite=Data Source=Mimic.db
       - SwaggerEnabled=false
     ports:
