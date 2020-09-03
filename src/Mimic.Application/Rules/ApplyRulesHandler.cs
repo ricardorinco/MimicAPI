@@ -3,11 +3,10 @@ using Mimic.Application.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 
 namespace Mimic.Application.Rules
 {
-    public static class ApplyRulesHandler<RuleDto, Entity>
+    public class ApplyRulesHandler<RuleDto, Entity>
     {
         private static List<IRuleHandler<RuleDto, Entity>> rulesHandler;
 
@@ -15,26 +14,20 @@ namespace Mimic.Application.Rules
         {
             Reset();
 
-            AddRulesToList(GetTypes(nameSpace));
+            AddRulesToList(nameSpace);
             LinkNextRules();
 
             return rulesHandler.FirstOrDefault().Apply(ruleDto, entity);
-        }
-
-        private static Type[] GetTypes(string nameSpace)
-        {
-            return AssemblyUtil.GetTypesInNamespace(
-                Assembly.GetExecutingAssembly(),
-                $"{typeof(ApplyRulesHandler<RuleDto, Entity>).Namespace}.{nameSpace}"
-            );
         }
 
         private static void Reset()
         {
             rulesHandler = new List<IRuleHandler<RuleDto, Entity>>();
         }
-        private static void AddRulesToList(Type[] types)
+        private static void AddRulesToList(string nameSpace)
         {
+            var types = AssemblyUtil.GetTypes<ApplyRulesHandler<RuleDto, Entity>>(nameSpace);
+
             foreach (var type in types)
             {
                 var classRule = (IRuleHandler<RuleDto, Entity>)Activator.CreateInstance(type);

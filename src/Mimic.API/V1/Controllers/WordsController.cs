@@ -107,11 +107,16 @@ namespace Mimic.WebApi.V1.Controllers
             }
 
             var ruleDto = WordMappers.AddWordRequestDtoToAddWordRuleDto(requestDto);
-            var word = await wordService.AddAsync(ruleDto);
+            var result = await wordService.AddAsync(ruleDto);
+
+            if (!result.CustomValidation.IsValid)
+            {
+                return BadRequest(result.CustomValidation.Errors);
+            }
 
             // word.Links.Add(new Link("self", Url.Link("GetWord", new { id = word.Id }), "GET"));
 
-            return Created($"api/words/{word.Id}", word);
+            return Created($"api/words/{result.Entity.Id}", result.Entity);
         }
 
         /// <summary>

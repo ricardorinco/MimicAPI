@@ -1,9 +1,11 @@
-﻿namespace Mimic.Application.Interfaces
-{
-    public interface IValidationHandler<RuleDto>
-    {
-        IValidationHandler<RuleDto> Next { get; set; }
+﻿using FluentValidation.Results;
 
-        dynamic Apply(RuleDto ruleDto);
+namespace Mimic.Application.Interfaces
+{
+    public interface IValidationHandler<ValidationDto>
+    {
+        public IValidationHandler<ValidationDto> Next { get; set; }
+
+        public ValidationResult Apply(ValidationDto validationDto);
     }
 }

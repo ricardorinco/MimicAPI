@@ -1,4 +1,5 @@
-﻿using Mimic.Application.Dtos.Words;
+﻿using Mimic.Application.Dtos;
+using Mimic.Application.Dtos.Words;
 using Mimic.Domain.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -29,7 +30,7 @@ namespace Mimic.Application.Interfaces
         /// </summary>
         /// <param name="ruleDto">Objeto AddWordRuleDto</param>
         /// <returns>Palavra adicionada</returns>
-        Task<Word> AddAsync(AddWordRuleDto ruleDto);
+        Task<ApplicationDto<Word>> AddAsync(AddWordRuleDto ruleDto);
 
         /// <summary>
         /// Realiza a atualização da palavra informada

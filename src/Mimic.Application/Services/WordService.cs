@@ -1,6 +1,8 @@
-﻿using Mimic.Application.Dtos.Words;
+﻿using Mimic.Application.Dtos;
+using Mimic.Application.Dtos.Words;
 using Mimic.Application.Interfaces;
 using Mimic.Application.Rules;
+using Mimic.Application.Validations;
 using Mimic.Domain.Models;
 using Mimic.Infra.Data.Interfaces;
 using System.Collections.Generic;
@@ -34,14 +36,22 @@ namespace Mimic.Application.Services
             return await wordRepository.GetByIdAsync(id);
         }
 
-        public async Task<Word> AddAsync(AddWordRuleDto ruleDto)
+        public async Task<ApplicationDto<Word>> AddAsync(AddWordRuleDto ruleDto)
         {
+            var validation = ApplyValidationsHandler<AddWordRuleDto>
+                .ApplyRules(ruleDto, "Words.Add");
+            
+            if (!validation.IsValid)
+            {
+                return new ApplicationDto<Word>(validation);
+            }
+
             var word = ApplyRulesHandler<AddWordRuleDto, Word>
                 .ApplyRules(ruleDto, new Word(), "Words.Add");
 
             await wordRepository.AddAsync(word);
 
-            return word;
+            return new ApplicationDto<Word>(word);
         }
         public async Task<Word> UpdateAsync(UpdateWordRuleDto ruleDto)
         {
