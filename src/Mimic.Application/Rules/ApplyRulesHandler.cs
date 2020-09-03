@@ -7,25 +7,42 @@ using System.Reflection;
 
 namespace Mimic.Application.Rules
 {
-    public static class ApplyRulesHandler<EntityDto, Entity>
+    public static class ApplyRulesHandler<RuleDto, Entity>
     {
-        private static List<IRuleHandler<EntityDto, Entity>> rulesHandler;
+        private static List<IRuleHandler<RuleDto, Entity>> rulesHandler;
 
-        public static Entity ApplyRules(EntityDto entityDto, Entity entity, string nameSpace)
+        public static Entity ApplyRules(RuleDto ruleDto, Entity entity, string nameSpace)
         {
-            rulesHandler = new List<IRuleHandler<EntityDto, Entity>>();
+            Reset();
 
-            var types = AssemblyUtil.GetTypesInNamespace(
+            AddRulesToList(GetTypes(nameSpace));
+            LinkNextRules();
+
+            return rulesHandler.FirstOrDefault().Apply(ruleDto, entity);
+        }
+
+        private static Type[] GetTypes(string nameSpace)
+        {
+            return AssemblyUtil.GetTypesInNamespace(
                 Assembly.GetExecutingAssembly(),
-                $"{typeof(ApplyRulesHandler<EntityDto, Entity>).Namespace}.{nameSpace}"
+                $"{typeof(ApplyRulesHandler<RuleDto, Entity>).Namespace}.{nameSpace}"
             );
+        }
 
+        private static void Reset()
+        {
+            rulesHandler = new List<IRuleHandler<RuleDto, Entity>>();
+        }
+        private static void AddRulesToList(Type[] types)
+        {
             foreach (var type in types)
             {
-                var classRule = (IRuleHandler<EntityDto, Entity>)Activator.CreateInstance(type);
+                var classRule = (IRuleHandler<RuleDto, Entity>)Activator.CreateInstance(type);
                 rulesHandler.Add(classRule);
             }
-
+        }
+        private static void LinkNextRules()
+        {
             int count = 1;
             foreach (var rule in rulesHandler)
             {
@@ -35,8 +52,6 @@ namespace Mimic.Application.Rules
                     count++;
                 }
             }
-
-            return rulesHandler.FirstOrDefault().Apply(entityDto, entity);
         }
     }
 }

@@ -1,9 +1,9 @@
 ﻿namespace Mimic.Application.Interfaces
 {
-    public interface IRuleHandler<EntityDto, Entity>
+    public interface IRuleHandler<RuleDto, Entity>
     {
-        IRuleHandler<EntityDto, Entity> Next { get; set; }
+        IRuleHandler<RuleDto, Entity> Next { get; set; }
 
-        Entity Apply(EntityDto entityDto, Entity entity);
+        Entity Apply(RuleDto ruleDto, Entity entity);
     }
 }
