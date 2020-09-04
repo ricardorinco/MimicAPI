@@ -31,6 +31,15 @@ namespace Mimic.Application.Dtos.Validations
                 ErrorCode = validationFailure.ErrorCode
             });
         }
+        public void AddError(string propertyName, string errorMessage, string errorCode)
+        {
+            Errors.Add(new Error
+            {
+                PropertyName = propertyName,
+                Message = errorMessage,
+                ErrorCode = errorCode
+            });
+        }
 
         public void SetIsValid(bool isValid)
         {

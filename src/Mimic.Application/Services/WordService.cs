@@ -1,6 +1,8 @@
 ﻿using Mimic.Application.Dtos;
+using Mimic.Application.Dtos.Validations;
 using Mimic.Application.Dtos.Words;
 using Mimic.Application.Interfaces;
+using Mimic.Application.Resources;
 using Mimic.Application.Rules;
 using Mimic.Application.Validations;
 using Mimic.Domain.Models;
@@ -53,16 +55,35 @@ namespace Mimic.Application.Services
 
             return new ApplicationDto<Word>(word);
         }
-        public async Task<Word> UpdateAsync(UpdateWordRuleDto ruleDto)
+        public async Task<ApplicationDto<Word>> UpdateAsync(UpdateWordRuleDto ruleDto)
         {
             var foundWord = await GetByIdAsync(ruleDto.Id);
+            if (foundWord == null)
+            {
+                var customValidation = new CustomValidation();
+                customValidation.AddError(
+                    "Word",
+                    string.Format(ValidationsResource.DataNotFoundDatabase, "Word"),
+                    "DataNotFoundDatabase"
+                );
+
+                return new ApplicationDto<Word>(customValidation);
+            }
+
+            var validation = ApplyValidationsHandler<UpdateWordRuleDto>
+                .ApplyRules(ruleDto, "Words.Add");
+
+            if (!validation.IsValid)
+            {
+                return new ApplicationDto<Word>(validation);
+            }
             
             var word = ApplyRulesHandler<UpdateWordRuleDto, Word>
                 .ApplyRules(ruleDto, foundWord, "Words.Update");
 
             await wordRepository.UpdateAsync(word);
 
-            return word;
+            return new ApplicationDto<Word>(word);
         }
         public async Task DeleteAsync(DeleteWordRuleDto ruleDto)
         {

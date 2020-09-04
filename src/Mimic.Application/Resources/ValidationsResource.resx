@@ -120,6 +120,9 @@
   <data name="CannotBeEmpty" xml:space="preserve">
     <value>{0} cannot be empty.</value>
   </data>
+  <data name="DataNotFoundDatabase" xml:space="preserve">
+    <value>{0} not found in the database.</value>
+  </data>
   <data name="GreaterThanZero" xml:space="preserve">
     <value>{0} must be greater than zero.</value>
   </data>

@@ -37,7 +37,7 @@ namespace Mimic.Application.Interfaces
         /// </summary>
         /// <param name="ruleDto">Objeto UpdateWordRuleDto</param>
         /// <returns>Palavra atualizada</returns>
-        Task<Word> UpdateAsync(UpdateWordRuleDto ruleDto);
+        Task<ApplicationDto<Word>> UpdateAsync(UpdateWordRuleDto ruleDto);
 
         /// <summary>
         /// Realiza a exclusão lógica de uma palavra através do Id informado

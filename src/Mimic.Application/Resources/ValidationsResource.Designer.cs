@@ -70,6 +70,15 @@ namespace Mimic.Application.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} not found in the database..
+        /// </summary>
+        internal static string DataNotFoundDatabase {
+            get {
+                return ResourceManager.GetString("DataNotFoundDatabase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} must be greater than zero..
         /// </summary>
         internal static string GreaterThanZero {

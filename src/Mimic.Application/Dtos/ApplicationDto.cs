@@ -11,11 +11,14 @@ namespace Mimic.Application.Dtos
         public ApplicationDto(EntityBase entity)
         {
             Entity = entity;
-        }
 
+            CustomValidation = new CustomValidation();
+            CustomValidation.SetIsValid(true);
+        }
         public ApplicationDto(CustomValidation customValidation)
         {
             CustomValidation = customValidation;
+            CustomValidation.SetIsValid(false);
         }
     }
 }
