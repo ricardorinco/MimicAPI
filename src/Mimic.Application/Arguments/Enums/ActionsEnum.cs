@@ -1,6 +1,6 @@
 ﻿namespace Mimic.Application.Arguments.Enums
 {
-    public enum Actions
+    public enum ActionsEnum
     {
         Add,
         Delete,

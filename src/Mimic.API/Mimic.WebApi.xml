@@ -4,25 +4,65 @@
         <name>Mimic.WebApi</name>
     </assembly>
     <members>
-        <member name="T:Mimic.WebApi.Dtos.Words.QueryWordRequestDto">
+        <member name="T:Mimic.WebApi.Arguments.Dtos.Words.AddWordRequestDto">
+            <summary>
+            Classe para realizar a inclusão de uma nova palavra
+            </summary>
+        </member>
+        <member name="P:Mimic.WebApi.Arguments.Dtos.Words.AddWordRequestDto.Description">
+            <summary>
+            Descrição da palavra
+            </summary>
+        </member>
+        <member name="P:Mimic.WebApi.Arguments.Dtos.Words.AddWordRequestDto.Points">
+            <summary>
+            Pontuação da palavra
+            </summary>
+        </member>
+        <member name="T:Mimic.WebApi.Arguments.Dtos.Words.QueryWordRequestDto">
             <summary>
             Classe responsável por realização das consultas às palavras
             </summary>
         </member>
-        <member name="P:Mimic.WebApi.Dtos.Words.QueryWordRequestDto.CreatedDate">
+        <member name="P:Mimic.WebApi.Arguments.Dtos.Words.QueryWordRequestDto.CreatedDate">
             <summary>
             Data de criação da palavra para ser consultada, padrão será -30 dias
             contandos à partir da data de pesquisa
             </summary>
         </member>
-        <member name="P:Mimic.WebApi.Dtos.Words.QueryWordRequestDto.CurrentPage">
+        <member name="P:Mimic.WebApi.Arguments.Dtos.Words.QueryWordRequestDto.CurrentPage">
             <summary>
             Número da página atual, padrão será a primeira página
             </summary>
         </member>
-        <member name="P:Mimic.WebApi.Dtos.Words.QueryWordRequestDto.PageSize">
+        <member name="P:Mimic.WebApi.Arguments.Dtos.Words.QueryWordRequestDto.PageSize">
             <summary>
             Número de itens por página, padrão será 10 itens
+            </summary>
+        </member>
+        <member name="T:Mimic.WebApi.Arguments.Dtos.Words.UpdateWordRequestDto">
+            <summary>
+            Classe para realizar a atualização de uma palavra
+            </summary>
+        </member>
+        <member name="P:Mimic.WebApi.Arguments.Dtos.Words.UpdateWordRequestDto.Id">
+            <summary>
+            Id da palavra a ser atualizada
+            </summary>
+        </member>
+        <member name="P:Mimic.WebApi.Arguments.Dtos.Words.UpdateWordRequestDto.Description">
+            <summary>
+            Nova descrição da palavra
+            </summary>
+        </member>
+        <member name="P:Mimic.WebApi.Arguments.Dtos.Words.UpdateWordRequestDto.Points">
+            <summary>
+            Nova pontuação da palavra
+            </summary>
+        </member>
+        <member name="P:Mimic.WebApi.Arguments.Dtos.Words.UpdateWordRequestDto.Active">
+            <summary>
+            Novo status da palavra
             </summary>
         </member>
         <member name="T:Mimic.WebApi.Helpers.Mappers.WordMappers">
@@ -30,7 +70,7 @@
             Mapeamendo dos objetos de Request para Rules
             </summary>
         </member>
-        <member name="M:Mimic.WebApi.Helpers.Mappers.WordMappers.AddWordRequestDtoToAddWordRuleDto(Mimic.WebApi.Dtos.Words.AddWordRequestDto)">
+        <member name="M:Mimic.WebApi.Helpers.Mappers.WordMappers.AddWordRequestDtoToAddWordRuleDto(Mimic.WebApi.Arguments.Dtos.Words.AddWordRequestDto)">
             <summary>
             Mapeamento de AddWordRequestDto para AddWordRuleDto
             </summary>
@@ -44,14 +84,14 @@
             <param name="id">Id da palavra</param>
             <returns>Objeto de DeleteWordRuleDto</returns>
         </member>
-        <member name="M:Mimic.WebApi.Helpers.Mappers.WordMappers.QueryWordequestDtoToQueryWordRuleDto(Mimic.WebApi.Dtos.Words.QueryWordRequestDto)">
+        <member name="M:Mimic.WebApi.Helpers.Mappers.WordMappers.QueryWordequestDtoToQueryWordRuleDto(Mimic.WebApi.Arguments.Dtos.Words.QueryWordRequestDto)">
             <summary>
             Mapeamento de QueryWordequestDto para QueryWordRuleDto
             </summary>
             <param name="dto">Objeto de QueryWordequestDto</param>
             <returns>Objeto de QueryWordRuleDto</returns>
         </member>
-        <member name="M:Mimic.WebApi.Helpers.Mappers.WordMappers.UpdateWordRequestDtoToUpdateWordRuleDto(Mimic.WebApi.Dtos.Words.UpdateWordRequestDto)">
+        <member name="M:Mimic.WebApi.Helpers.Mappers.WordMappers.UpdateWordRequestDtoToUpdateWordRuleDto(Mimic.WebApi.Arguments.Dtos.Words.UpdateWordRequestDto)">
             <summary>
             Mapeamento de UpdateWordRequestDto para UpdateWordRuleDto
             </summary>
@@ -71,6 +111,8 @@
         <member name="T:Mimic.WebApi.V1.Controllers.WordsController">
             <summary>
             Controller de palavras
+            
+            Versões: v1.0 e 1.1
             </summary>
         </member>
         <member name="M:Mimic.WebApi.V1.Controllers.WordsController.#ctor(Mimic.Application.Interfaces.IWordService)">
@@ -79,13 +121,6 @@
             </summary>
             <param name="wordService">Implementação de IWordService</param>
         </member>
-        <member name="M:Mimic.WebApi.V1.Controllers.WordsController.GetAllBySearch(Mimic.WebApi.Dtos.Words.QueryWordRequestDto)">
-            <summary>
-            Realiza uma consulta de palavras de acordo com os filtros informados
-            </summary>
-            <param name="requestDto">Objeto QueryWordRequestDto</param>
-            <returns>Lista das palavras encontradas</returns>
-        </member>
         <member name="M:Mimic.WebApi.V1.Controllers.WordsController.GetByIdAsync(System.Int32)">
             <summary>
             Realiza a busca de uma palavra através do Id informado
@@ -93,14 +128,14 @@
             <param name="id">Id da palavra</param>
             <returns>Palavra encontrada</returns>
         </member>
-        <member name="M:Mimic.WebApi.V1.Controllers.WordsController.AddAsync(Mimic.WebApi.Dtos.Words.AddWordRequestDto)">
+        <member name="M:Mimic.WebApi.V1.Controllers.WordsController.AddAsync(Mimic.WebApi.Arguments.Dtos.Words.AddWordRequestDto)">
             <summary>
             Realiza a inclusão da palavra informada
             </summary>
             <param name="requestDto">Objeto AddWordRequestDto</param>
             <returns>Objeto de Palavra</returns>
         </member>
-        <member name="M:Mimic.WebApi.V1.Controllers.WordsController.UpdateAsync(System.Int32,Mimic.WebApi.Dtos.Words.UpdateWordRequestDto)">
+        <member name="M:Mimic.WebApi.V1.Controllers.WordsController.UpdateAsync(System.Int32,Mimic.WebApi.Arguments.Dtos.Words.UpdateWordRequestDto)">
             <summary>
             Realiza a atualização da palavra informada
             </summary>
@@ -113,6 +148,26 @@
             Realiza a exclusão de uma palavra através do Id informado
             </summary>
             <param name="id">Id da palavra</param>
+        </member>
+        <member name="T:Mimic.WebApi.V2.Controllers.WordsController">
+            <summary>
+            Controller de palavras
+            
+            Versão: v2.0
+            </summary>
+        </member>
+        <member name="M:Mimic.WebApi.V2.Controllers.WordsController.#ctor(Mimic.Application.Interfaces.IWordService)">
+            <summary>
+            Construtor da classe
+            </summary>
+            <param name="wordService">Implementação de IWordService</param>
+        </member>
+        <member name="M:Mimic.WebApi.V2.Controllers.WordsController.GetAllBySearch(Mimic.WebApi.Arguments.Dtos.Words.QueryWordRequestDto)">
+            <summary>
+            Realiza uma consulta de palavras de acordo com os filtros informados
+            </summary>
+            <param name="requestDto">Objeto QueryWordRequestDto</param>
+            <returns>Lista das palavras encontradas</returns>
         </member>
     </members>
 </doc>

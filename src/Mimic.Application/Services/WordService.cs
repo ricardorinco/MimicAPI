@@ -24,7 +24,7 @@ namespace Mimic.Application.Services
 
         public async Task<IList<Word>> GetByQueryAsync(QueryWordRuleDto ruleDto)
         {
-            var nameSpace = $"{EntitiesEnum.Words}.{Actions.Query}";
+            var nameSpace = $"{EntitiesEnum.Words}.{ActionsEnum.Query}";
 
             ruleDto = ApplyRulesHandler<QueryWordRuleDto, QueryWordRuleDto>
                 .ApplyRules(ruleDto, ruleDto, nameSpace);
@@ -43,7 +43,7 @@ namespace Mimic.Application.Services
 
         public async Task<ApplicationDto<Word>> AddAsync(AddWordRuleDto ruleDto)
         {
-            var nameSpace = $"{EntitiesEnum.Words}.{Actions.Add}";
+            var nameSpace = $"{EntitiesEnum.Words}.{ActionsEnum.Add}";
             var validation = ApplyValidationsHandler<AddWordRuleDto>
                 .ApplyRules(ruleDto, nameSpace);
             
@@ -61,7 +61,7 @@ namespace Mimic.Application.Services
         }
         public async Task<ApplicationDto<Word>> UpdateAsync(UpdateWordRuleDto ruleDto)
         {
-            var nameSpace = $"{EntitiesEnum.Words}.{Actions.Update}";
+            var nameSpace = $"{EntitiesEnum.Words}.{ActionsEnum.Update}";
 
             var foundWord = await GetByIdAsync(ruleDto.Id);
             if (foundWord == null)
@@ -93,7 +93,7 @@ namespace Mimic.Application.Services
         }
         public async Task<ApplicationDto<Word>> DeleteAsync(DeleteWordRuleDto ruleDto)
         {
-            var nameSpace = $"{EntitiesEnum.Words}.{Actions.Delete}";
+            var nameSpace = $"{EntitiesEnum.Words}.{ActionsEnum.Delete}";
 
             var foundWord = await GetByIdAsync(ruleDto.Id);
             if (foundWord == null)

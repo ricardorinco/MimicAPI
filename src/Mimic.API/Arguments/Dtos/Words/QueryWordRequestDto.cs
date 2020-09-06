@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Mimic.WebApi.Dtos.Words
+namespace Mimic.WebApi.Arguments.Dtos.Words
 {
     /// <summary>
     /// Classe responsável por realização das consultas às palavras

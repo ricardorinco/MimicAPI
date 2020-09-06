@@ -3,7 +3,7 @@
 namespace Mimic.Application.Arguments.Dtos.Words
 {
     /// <summary>
-    /// Classe para realização das consultas às palavras
+    /// Classe responsável por realização das consultas às palavras
     /// </summary>
     public class QueryWordRuleDto
     {
