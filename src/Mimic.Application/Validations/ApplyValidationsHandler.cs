@@ -1,4 +1,4 @@
-﻿using Mimic.Application.Dtos.Validations;
+﻿using Mimic.Application.Arguments.Dtos.Validations;
 using Mimic.Application.Interfaces;
 using Mimic.Application.Utils;
 using System;

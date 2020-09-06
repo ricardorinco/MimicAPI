@@ -1,4 +1,4 @@
-﻿using Mimic.Application.Dtos.Words;
+﻿using Mimic.Application.Arguments.Dtos.Words;
 using Mimic.Application.Interfaces;
 using System;
 

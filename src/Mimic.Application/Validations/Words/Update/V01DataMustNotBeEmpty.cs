@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
-using Mimic.Application.Dtos.Words;
+using Mimic.Application.Arguments.Dtos.Words;
 using Mimic.Application.Interfaces;
 using Mimic.Application.Resources;
 
