@@ -18,7 +18,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"mimic\": \"Tartaruga\",\r\n    \"points\": 5\r\n}",
+									"raw": "{\r\n    \"description\": \"Astronauta\",\r\n    \"points\": 15\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -26,14 +26,14 @@
 									}
 								},
 								"url": {
-									"raw": "{{url}}:{{port}}/api/v1/words/",
+									"raw": "{{url}}:{{port}}/api/v1.1/words/",
 									"host": [
 										"{{url}}"
 									],
 									"port": "{{port}}",
 									"path": [
 										"api",
-										"v1",
+										"v1.1",
 										"words",
 										""
 									]
@@ -48,7 +48,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"mimic\": \"Jabuti\",\r\n    \"points\": 6,\r\n    \"active\": true\r\n}",
+									"raw": "{\r\n    \"description\": \"Pescador\",\r\n    \"points\": 20,\r\n    \"active\": true\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -77,16 +77,16 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "{{url}}:{{port}}/api/v1/words/1",
+									"raw": "{{url}}:{{port}}/api/v1.1/words/2",
 									"host": [
 										"{{url}}"
 									],
 									"port": "{{port}}",
 									"path": [
 										"api",
-										"v1",
+										"v1.1",
 										"words",
-										"1"
+										"2"
 									]
 								}
 							},
@@ -98,7 +98,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{url}}:{{port}}/api/v1/words?searchDate=2020-08-11&page=1&dataAmount=10",
+									"raw": "{{url}}:{{port}}/api/v1/words?createdDate=2020-08-30&currentPage=1&pageSize=10",
 									"host": [
 										"{{url}}"
 									],
@@ -110,15 +110,15 @@
 									],
 									"query": [
 										{
-											"key": "searchDate",
-											"value": "2020-08-11"
+											"key": "createdDate",
+											"value": "2020-08-30"
 										},
 										{
-											"key": "page",
+											"key": "currentPage",
 											"value": "1"
 										},
 										{
-											"key": "dataAmount",
+											"key": "pageSize",
 											"value": "10"
 										}
 									]
@@ -132,7 +132,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{url}}:{{port}}/api/v1/words/2",
+									"raw": "{{url}}:{{port}}/api/v1/words/1",
 									"host": [
 										"{{url}}"
 									],
@@ -141,7 +141,7 @@
 										"api",
 										"v1",
 										"words",
-										"2"
+										"1"
 									]
 								}
 							},
@@ -166,7 +166,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{url}}:{{port}}/api/v2/words",
+									"raw": "{{url}}:{{port}}/api/v2/words?createdDate=2020-08-30&currentPage=1&pageSize=10",
 									"host": [
 										"{{url}}"
 									],
@@ -175,6 +175,20 @@
 										"api",
 										"v2",
 										"words"
+									],
+									"query": [
+										{
+											"key": "createdDate",
+											"value": "2020-08-30"
+										},
+										{
+											"key": "currentPage",
+											"value": "1"
+										},
+										{
+											"key": "pageSize",
+											"value": "10"
+										}
 									]
 								}
 							},
