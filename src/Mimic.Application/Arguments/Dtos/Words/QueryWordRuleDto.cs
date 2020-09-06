@@ -1,9 +1,9 @@
 ﻿using System;
 
-namespace Mimic.Application.Dtos.Words
+namespace Mimic.Application.Arguments.Dtos.Words
 {
     /// <summary>
-    /// Classe responsável por realização das consultas às palavras
+    /// Classe para realização das consultas às palavras
     /// </summary>
     public class QueryWordRuleDto
     {

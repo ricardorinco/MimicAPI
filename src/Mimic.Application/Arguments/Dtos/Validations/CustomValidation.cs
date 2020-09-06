@@ -1,7 +1,7 @@
 ﻿using FluentValidation.Results;
 using System.Collections.Generic;
 
-namespace Mimic.Application.Dtos.Validations
+namespace Mimic.Application.Arguments.Dtos.Validations
 {
     public class CustomValidation
     {

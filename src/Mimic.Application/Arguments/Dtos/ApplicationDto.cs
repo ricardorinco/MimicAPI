@@ -1,7 +1,7 @@
-﻿using Mimic.Application.Dtos.Validations;
+﻿using Mimic.Application.Arguments.Dtos.Validations;
 using Mimic.Domain.Models;
 
-namespace Mimic.Application.Dtos
+namespace Mimic.Application.Arguments.Dtos
 {
     public class ApplicationDto<EntityBase> where EntityBase : Base
     {

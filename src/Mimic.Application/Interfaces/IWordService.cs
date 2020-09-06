@@ -1,5 +1,5 @@
-﻿using Mimic.Application.Dtos;
-using Mimic.Application.Dtos.Words;
+﻿using Mimic.Application.Arguments.Dtos;
+using Mimic.Application.Arguments.Dtos.Words;
 using Mimic.Domain.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -43,6 +43,7 @@ namespace Mimic.Application.Interfaces
         /// Realiza a exclusão lógica de uma palavra através do Id informado
         /// </summary>
         /// <param name="ruleDto">Objeto DeleteWordRuleDto</param>
-        Task DeleteAsync(DeleteWordRuleDto ruleDto);
+        /// <returns>Palavra atualizada</returns>
+        Task<ApplicationDto<Word>> DeleteAsync(DeleteWordRuleDto ruleDto);
     }
 }

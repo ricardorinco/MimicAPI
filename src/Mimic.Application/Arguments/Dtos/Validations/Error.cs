@@ -1,4 +1,4 @@
-﻿namespace Mimic.Application.Dtos.Validations
+﻿namespace Mimic.Application.Arguments.Dtos.Validations
 {
     public class Error
     {
