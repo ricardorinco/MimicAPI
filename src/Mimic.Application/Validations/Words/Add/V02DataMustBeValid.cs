@@ -6,11 +6,11 @@ using Mimic.Application.Resources;
 
 namespace Mimic.Application.Validations.Words.Add
 {
-    public class V02DataMustBeValid : AbstractValidator<AddWordRuleDto>, IValidationHandler<AddWordRuleDto>
+    public class V02DataMustBeValid : AbstractValidator<AddWordDto>, IValidationHandler<AddWordDto>
     {
-        public IValidationHandler<AddWordRuleDto> Next { get; set; }
+        public IValidationHandler<AddWordDto> Next { get; set; }
 
-        public ValidationResult Apply(AddWordRuleDto validationDto)
+        public ValidationResult Apply(AddWordDto validationDto)
         {
             RuleFor(word => word.Description)
                 .MaximumLength(120)

@@ -4,18 +4,18 @@ using Mimic.WebApi.Arguments.Dtos.Words;
 namespace Mimic.WebApi.Helpers.Mappers
 {
     /// <summary>
-    /// Mapeamendo dos objetos de Request para Rules
+    /// Mapeamendo dos objetos de Request
     /// </summary>
     public class WordMappers
     {
         /// <summary>
-        /// Mapeamento de AddWordRequestDto para AddWordRuleDto
+        /// Mapeamento de AddWordRequestDto para AddWordDto
         /// </summary>
         /// <param name="dto">Objeto de AddWordRequestDto</param>
-        /// <returns>Objeto de AddWordRuleDto</returns>
-        public static AddWordRuleDto AddWordRequestDtoToAddWordRuleDto(AddWordRequestDto dto)
+        /// <returns>Objeto de AddWordDto</returns>
+        public static AddWordDto AddWordRequestDtoToAddWordDto(AddWordRequestDto dto)
         {
-            return new AddWordRuleDto
+            return new AddWordDto
             {
                 Description = dto.Description,
                 Points = dto.Points
@@ -23,26 +23,26 @@ namespace Mimic.WebApi.Helpers.Mappers
         }
 
         /// <summary>
-        /// Mapeamento de DeleteWordRequestDto para DeleteWordRuleDto
+        /// Mapeamento de DeleteWordRequestDto para DeleteWordDto
         /// </summary>
         /// <param name="id">Id da palavra</param>
-        /// <returns>Objeto de DeleteWordRuleDto</returns>
-        public static DeleteWordRuleDto DeleteWordRequestDtoToDeleteWordRuleDto(int id)
+        /// <returns>Objeto de DeleteWordDto</returns>
+        public static DeleteWordDto DeleteWordRequestDtoToDeleteWordDto(int id)
         {
-            return new DeleteWordRuleDto
+            return new DeleteWordDto
             {
                 Id = id
             };
         }
 
         /// <summary>
-        /// Mapeamento de QueryWordequestDto para QueryWordRuleDto
+        /// Mapeamento de QueryWordequestDto para QueryWordDto
         /// </summary>
         /// <param name="dto">Objeto de QueryWordequestDto</param>
-        /// <returns>Objeto de QueryWordRuleDto</returns>
-        public static QueryWordRuleDto QueryWordequestDtoToQueryWordRuleDto(QueryWordRequestDto dto)
+        /// <returns>Objeto de QueryWordDto</returns>
+        public static QueryWordDto QueryWordequestDtoToQueryWordDto(QueryWordRequestDto dto)
         {
-            return new QueryWordRuleDto
+            return new QueryWordDto
             {
                 CreatedDate = dto.CreatedDate,
                 CurrentPage = dto.CurrentPage,
@@ -51,13 +51,13 @@ namespace Mimic.WebApi.Helpers.Mappers
         }
 
         /// <summary>
-        /// Mapeamento de UpdateWordRequestDto para UpdateWordRuleDto
+        /// Mapeamento de UpdateWordRequestDto para UpdateWordDto
         /// </summary>
         /// <param name="dto">Objeto de UpdateWordRequestDto</param>
-        /// <returns>Objeto de UpdateWordRuleDto</returns>
-        public static UpdateWordRuleDto UpdateWordRequestDtoToUpdateWordRuleDto(UpdateWordRequestDto dto)
+        /// <returns>Objeto de UpdateWordDto</returns>
+        public static UpdateWordDto UpdateWordRequestDtoToUpdateWordDto(UpdateWordRequestDto dto)
         {
-            return new UpdateWordRuleDto
+            return new UpdateWordDto
             {
                 Id = dto.Id,
                 Description = dto.Description,

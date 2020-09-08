@@ -22,11 +22,11 @@ namespace Mimic.Application.Services
             this.wordRepository = wordRepository;
         }
 
-        public async Task<IList<Word>> GetByQueryAsync(QueryWordRuleDto ruleDto)
+        public async Task<IList<Word>> GetByQueryAsync(QueryWordDto ruleDto)
         {
             var nameSpace = $"{EntitiesEnum.Words}.{ActionsEnum.Query}";
 
-            ruleDto = ApplyRulesHandler<QueryWordRuleDto, QueryWordRuleDto>
+            ruleDto = ApplyRulesHandler<QueryWordDto, QueryWordDto>
                 .ApplyRules(ruleDto, ruleDto, nameSpace);
 
             return await wordRepository.GetByQueryAsync(
@@ -41,10 +41,10 @@ namespace Mimic.Application.Services
             return await wordRepository.GetByIdAsync(id);
         }
 
-        public async Task<ApplicationDto<Word>> AddAsync(AddWordRuleDto ruleDto)
+        public async Task<ApplicationDto<Word>> AddAsync(AddWordDto ruleDto)
         {
             var nameSpace = $"{EntitiesEnum.Words}.{ActionsEnum.Add}";
-            var validation = ApplyValidationsHandler<AddWordRuleDto>
+            var validation = ApplyValidationsHandler<AddWordDto>
                 .ApplyRules(ruleDto, nameSpace);
             
             if (!validation.IsValid)
@@ -52,14 +52,14 @@ namespace Mimic.Application.Services
                 return new ApplicationDto<Word>(validation);
             }
 
-            var word = ApplyRulesHandler<AddWordRuleDto, Word>
+            var word = ApplyRulesHandler<AddWordDto, Word>
                 .ApplyRules(ruleDto, new Word(), nameSpace);
 
             await wordRepository.AddAsync(word);
 
             return new ApplicationDto<Word>(word);
         }
-        public async Task<ApplicationDto<Word>> UpdateAsync(UpdateWordRuleDto ruleDto)
+        public async Task<ApplicationDto<Word>> UpdateAsync(UpdateWordDto ruleDto)
         {
             var nameSpace = $"{EntitiesEnum.Words}.{ActionsEnum.Update}";
 
@@ -76,7 +76,7 @@ namespace Mimic.Application.Services
                 return new ApplicationDto<Word>(customValidation);
             }
 
-            var validation = ApplyValidationsHandler<UpdateWordRuleDto>
+            var validation = ApplyValidationsHandler<UpdateWordDto>
                 .ApplyRules(ruleDto, nameSpace);
 
             if (!validation.IsValid)
@@ -84,14 +84,14 @@ namespace Mimic.Application.Services
                 return new ApplicationDto<Word>(validation);
             }
             
-            var word = ApplyRulesHandler<UpdateWordRuleDto, Word>
+            var word = ApplyRulesHandler<UpdateWordDto, Word>
                 .ApplyRules(ruleDto, foundWord, nameSpace);
 
             await wordRepository.UpdateAsync(word);
 
             return new ApplicationDto<Word>(word);
         }
-        public async Task<ApplicationDto<Word>> DeleteAsync(DeleteWordRuleDto ruleDto)
+        public async Task<ApplicationDto<Word>> DeleteAsync(DeleteWordDto ruleDto)
         {
             var nameSpace = $"{EntitiesEnum.Words}.{ActionsEnum.Delete}";
 
@@ -108,7 +108,7 @@ namespace Mimic.Application.Services
                 return new ApplicationDto<Word>(customValidation);
             }
 
-            var word = ApplyRulesHandler<DeleteWordRuleDto, Word>
+            var word = ApplyRulesHandler<DeleteWordDto, Word>
                 .ApplyRules(ruleDto, foundWord, nameSpace);
 
             await wordRepository.UpdateAsync(word);

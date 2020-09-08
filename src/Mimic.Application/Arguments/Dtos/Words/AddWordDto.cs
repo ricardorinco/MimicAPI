@@ -3,7 +3,7 @@
     /// <summary>
     /// Classe para realizar a inclusão de uma nova palavra
     /// </summary>
-    public class AddWordRuleDto
+    public class AddWordDto
     {
         /// <summary>
         /// Descrição da palavra

@@ -3,7 +3,7 @@
     /// <summary>
     /// Classe para realizar a exclusão lógica de uma palavra
     /// </summary>
-    public class DeleteWordRuleDto
+    public class DeleteWordDto
     {
         /// <summary>
         /// Id da palavra

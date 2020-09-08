@@ -4,11 +4,11 @@ using System;
 
 namespace Mimic.Application.Rules.Words.Query
 {
-    public class R01AutoFillQuery : IRuleHandler<QueryWordRuleDto, QueryWordRuleDto>
+    public class R01AutoFillQuery : IRuleHandler<QueryWordDto, QueryWordDto>
     {
-        public IRuleHandler<QueryWordRuleDto, QueryWordRuleDto> Next { get; set; }
+        public IRuleHandler<QueryWordDto, QueryWordDto> Next { get; set; }
 
-        public QueryWordRuleDto Apply(QueryWordRuleDto ruleDto, QueryWordRuleDto queryDto)
+        public QueryWordDto Apply(QueryWordDto ruleDto, QueryWordDto queryDto)
         {
             if (!ruleDto.CreatedDate.HasValue)
             {

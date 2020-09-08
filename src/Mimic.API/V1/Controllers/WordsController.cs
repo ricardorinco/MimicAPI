@@ -65,7 +65,7 @@ namespace Mimic.WebApi.V1.Controllers
                 return BadRequest();
             }
 
-            var ruleDto = WordMappers.AddWordRequestDtoToAddWordRuleDto(requestDto);
+            var ruleDto = WordMappers.AddWordRequestDtoToAddWordDto(requestDto);
             var result = await wordService.AddAsync(ruleDto);
 
             if (!result.CustomValidation.IsValid)
@@ -96,7 +96,7 @@ namespace Mimic.WebApi.V1.Controllers
             }
 
             requestDto.Id = id;
-            var ruleDto = WordMappers.UpdateWordRequestDtoToUpdateWordRuleDto(requestDto);
+            var ruleDto = WordMappers.UpdateWordRequestDtoToUpdateWordDto(requestDto);
             var result = await wordService.UpdateAsync(ruleDto);
 
             if (!result.CustomValidation.IsValid)
@@ -123,7 +123,7 @@ namespace Mimic.WebApi.V1.Controllers
         [MapToApiVersion("1.1")]
         public async Task<IActionResult> DeleteAsync(int id)
         {
-            var ruleDto = WordMappers.DeleteWordRequestDtoToDeleteWordRuleDto(id);
+            var ruleDto = WordMappers.DeleteWordRequestDtoToDeleteWordDto(id);
             var result = await wordService.DeleteAsync(ruleDto);
 
             if (!result.CustomValidation.IsValid)

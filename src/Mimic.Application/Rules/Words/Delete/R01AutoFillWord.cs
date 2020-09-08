@@ -5,11 +5,11 @@ using System;
 
 namespace Mimic.Application.Rules.Words.Delete
 {
-    public class R01AutoFillWord : IRuleHandler<DeleteWordRuleDto, Word>
+    public class R01AutoFillWord : IRuleHandler<DeleteWordDto, Word>
     {
-        public IRuleHandler<DeleteWordRuleDto, Word> Next { get; set; }
+        public IRuleHandler<DeleteWordDto, Word> Next { get; set; }
 
-        public Word Apply(DeleteWordRuleDto ruleDto, Word foundWord)
+        public Word Apply(DeleteWordDto ruleDto, Word foundWord)
         {
             foundWord.Active = false;
             foundWord.UpdatedAt = DateTime.Now;

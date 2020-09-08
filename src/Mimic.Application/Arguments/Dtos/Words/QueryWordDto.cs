@@ -5,7 +5,7 @@ namespace Mimic.Application.Arguments.Dtos.Words
     /// <summary>
     /// Classe responsável por realização das consultas às palavras
     /// </summary>
-    public class QueryWordRuleDto
+    public class QueryWordDto
     {
         /// <summary>
         /// Data de criação da palavra para ser consultada, padrão será -30 dias

@@ -14,9 +14,9 @@ namespace Mimic.Application.Interfaces
         /// <summary>
         /// Realiza uma consulta de palavras de acordo com os filtros informados
         /// </summary>
-        /// <param name="ruleDto">Objeto QueryWordRuleDto</param>
+        /// <param name="ruleDto">Objeto QueryWordDto</param>
         /// <returns>Lista das palavras encontradas</returns>
-        Task<IList<Word>> GetByQueryAsync(QueryWordRuleDto ruleDto);
+        Task<IList<Word>> GetByQueryAsync(QueryWordDto ruleDto);
 
         /// <summary>
         /// Realiza a busca de uma palavra através do Id informado
@@ -28,22 +28,22 @@ namespace Mimic.Application.Interfaces
         /// <summary>
         /// Realiza a inclusão da palavra informada
         /// </summary>
-        /// <param name="ruleDto">Objeto AddWordRuleDto</param>
+        /// <param name="ruleDto">Objeto AddWordDto</param>
         /// <returns>Palavra adicionada</returns>
-        Task<ApplicationDto<Word>> AddAsync(AddWordRuleDto ruleDto);
+        Task<ApplicationDto<Word>> AddAsync(AddWordDto ruleDto);
 
         /// <summary>
         /// Realiza a atualização da palavra informada
         /// </summary>
-        /// <param name="ruleDto">Objeto UpdateWordRuleDto</param>
+        /// <param name="ruleDto">Objeto UpdateWordDto</param>
         /// <returns>Palavra atualizada</returns>
-        Task<ApplicationDto<Word>> UpdateAsync(UpdateWordRuleDto ruleDto);
+        Task<ApplicationDto<Word>> UpdateAsync(UpdateWordDto ruleDto);
 
         /// <summary>
         /// Realiza a exclusão lógica de uma palavra através do Id informado
         /// </summary>
-        /// <param name="ruleDto">Objeto DeleteWordRuleDto</param>
+        /// <param name="ruleDto">Objeto DeleteWordDto</param>
         /// <returns>Palavra atualizada</returns>
-        Task<ApplicationDto<Word>> DeleteAsync(DeleteWordRuleDto ruleDto);
+        Task<ApplicationDto<Word>> DeleteAsync(DeleteWordDto ruleDto);
     }
 }

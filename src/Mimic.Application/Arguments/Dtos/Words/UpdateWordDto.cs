@@ -3,7 +3,7 @@
     /// <summary>
     /// Classe para realizar a atualização de uma palavra
     /// </summary>
-    public class UpdateWordRuleDto
+    public class UpdateWordDto
     {
         /// <summary>
         /// Id da palavra a ser atualizada

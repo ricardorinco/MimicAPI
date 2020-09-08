@@ -3,13 +3,16 @@ using Microsoft.AspNetCore.Mvc.Versioning;
 using System;
 using System.Linq;
 
-public static class ActionDescriptorExtensions
+namespace Mimic.WebApi.Helpers.Swagger
 {
-    public static ApiVersionModel GetApiVersion(this ActionDescriptor actionDescriptor)
+    public static class ActionDescriptorExtensions
     {
-        return actionDescriptor?.Properties
-            .Where((kvp) => ((Type)kvp.Key).Equals(typeof(ApiVersionModel)))
-            .Select(kvp => kvp.Value as ApiVersionModel)
-            .FirstOrDefault();
+        public static ApiVersionModel GetApiVersion(this ActionDescriptor actionDescriptor)
+        {
+            return actionDescriptor?.Properties
+                .Where((kvp) => ((Type)kvp.Key).Equals(typeof(ApiVersionModel)))
+                .Select(kvp => kvp.Value as ApiVersionModel)
+                .FirstOrDefault();
+        }
     }
 }

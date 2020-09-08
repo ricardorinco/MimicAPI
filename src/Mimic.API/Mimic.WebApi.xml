@@ -67,36 +67,36 @@
         </member>
         <member name="T:Mimic.WebApi.Helpers.Mappers.WordMappers">
             <summary>
-            Mapeamendo dos objetos de Request para Rules
+            Mapeamendo dos objetos de Request
             </summary>
         </member>
-        <member name="M:Mimic.WebApi.Helpers.Mappers.WordMappers.AddWordRequestDtoToAddWordRuleDto(Mimic.WebApi.Arguments.Dtos.Words.AddWordRequestDto)">
+        <member name="M:Mimic.WebApi.Helpers.Mappers.WordMappers.AddWordRequestDtoToAddWordDto(Mimic.WebApi.Arguments.Dtos.Words.AddWordRequestDto)">
             <summary>
-            Mapeamento de AddWordRequestDto para AddWordRuleDto
+            Mapeamento de AddWordRequestDto para AddWordDto
             </summary>
             <param name="dto">Objeto de AddWordRequestDto</param>
-            <returns>Objeto de AddWordRuleDto</returns>
+            <returns>Objeto de AddWordDto</returns>
         </member>
-        <member name="M:Mimic.WebApi.Helpers.Mappers.WordMappers.DeleteWordRequestDtoToDeleteWordRuleDto(System.Int32)">
+        <member name="M:Mimic.WebApi.Helpers.Mappers.WordMappers.DeleteWordRequestDtoToDeleteWordDto(System.Int32)">
             <summary>
-            Mapeamento de DeleteWordRequestDto para DeleteWordRuleDto
+            Mapeamento de DeleteWordRequestDto para DeleteWordDto
             </summary>
             <param name="id">Id da palavra</param>
-            <returns>Objeto de DeleteWordRuleDto</returns>
+            <returns>Objeto de DeleteWordDto</returns>
         </member>
-        <member name="M:Mimic.WebApi.Helpers.Mappers.WordMappers.QueryWordequestDtoToQueryWordRuleDto(Mimic.WebApi.Arguments.Dtos.Words.QueryWordRequestDto)">
+        <member name="M:Mimic.WebApi.Helpers.Mappers.WordMappers.QueryWordequestDtoToQueryWordDto(Mimic.WebApi.Arguments.Dtos.Words.QueryWordRequestDto)">
             <summary>
-            Mapeamento de QueryWordequestDto para QueryWordRuleDto
+            Mapeamento de QueryWordequestDto para QueryWordDto
             </summary>
             <param name="dto">Objeto de QueryWordequestDto</param>
-            <returns>Objeto de QueryWordRuleDto</returns>
+            <returns>Objeto de QueryWordDto</returns>
         </member>
-        <member name="M:Mimic.WebApi.Helpers.Mappers.WordMappers.UpdateWordRequestDtoToUpdateWordRuleDto(Mimic.WebApi.Arguments.Dtos.Words.UpdateWordRequestDto)">
+        <member name="M:Mimic.WebApi.Helpers.Mappers.WordMappers.UpdateWordRequestDtoToUpdateWordDto(Mimic.WebApi.Arguments.Dtos.Words.UpdateWordRequestDto)">
             <summary>
-            Mapeamento de UpdateWordRequestDto para UpdateWordRuleDto
+            Mapeamento de UpdateWordRequestDto para UpdateWordDto
             </summary>
             <param name="dto">Objeto de UpdateWordRequestDto</param>
-            <returns>Objeto de UpdateWordRuleDto</returns>
+            <returns>Objeto de UpdateWordDto</returns>
         </member>
         <member name="T:Mimic.WebApi.MimicApiSettings">
             <summary>

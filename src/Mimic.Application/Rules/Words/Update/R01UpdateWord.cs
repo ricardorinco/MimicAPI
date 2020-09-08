@@ -4,11 +4,11 @@ using Mimic.Domain.Models;
 
 namespace Mimic.Application.Rules.Words.Update
 {
-    public class R01UpdateWord : IRuleHandler<UpdateWordRuleDto, Word>
+    public class R01UpdateWord : IRuleHandler<UpdateWordDto, Word>
     {
-        public IRuleHandler<UpdateWordRuleDto, Word> Next { get; set; }
+        public IRuleHandler<UpdateWordDto, Word> Next { get; set; }
 
-        public Word Apply(UpdateWordRuleDto ruleDto, Word foundWord)
+        public Word Apply(UpdateWordDto ruleDto, Word foundWord)
         {
             foundWord.Description = ruleDto.Description;
             foundWord.Points = ruleDto.Points;

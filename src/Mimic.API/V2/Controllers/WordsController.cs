@@ -40,7 +40,7 @@ namespace Mimic.WebApi.V2.Controllers
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<IActionResult> GetAllBySearch([FromQuery] QueryWordRequestDto requestDto)
         {
-            var ruleDto = WordMappers.QueryWordequestDtoToQueryWordRuleDto(requestDto);
+            var ruleDto = WordMappers.QueryWordequestDtoToQueryWordDto(requestDto);
             var words = await wordService.GetByQueryAsync(ruleDto);
 
             if (words.Count == 0)
