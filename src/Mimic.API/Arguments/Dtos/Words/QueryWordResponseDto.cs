@@ -1,7 +1,5 @@
 ﻿using Mimic.Domain.Models;
-using Mimic.WebApi.Arguments.HyperMedia;
 using System;
-using System.Collections.Generic;
 
 namespace Mimic.WebApi.Arguments.Dtos.Words
 {
@@ -15,8 +13,6 @@ namespace Mimic.WebApi.Arguments.Dtos.Words
 
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
-
-        public List<Link> Links { get; set; } = new List<Link>();
 
         public static explicit operator QueryWordResponseDto(Word word)
         {

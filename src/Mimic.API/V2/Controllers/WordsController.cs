@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Mimic.Application.Interfaces;
 using Mimic.WebApi.Arguments.Dtos.Words;
-using Mimic.WebApi.Arguments.HyperMedia;
 using Mimic.WebApi.Helpers.Mappers;
 using System.Collections.Generic;
 using System.Net;
@@ -51,13 +50,7 @@ namespace Mimic.WebApi.V2.Controllers
             var responseDto = new List<QueryWordResponseDto>();
             foreach (var word in words)
             {
-                var wordDto = (QueryWordResponseDto)word;
-                wordDto.Links = new List<Link>();
-                wordDto.Links.Add(new Link("self", Url.Link("GetWord", new { id = wordDto.Id }), "GET"));
-                wordDto.Links.Add(new Link("update", Url.Link("UpdateWord", new { id = wordDto.Id }), "PUT"));
-                wordDto.Links.Add(new Link("delete", Url.Link("DeleteWord", new { id = wordDto.Id }), "DELETE"));
-
-                responseDto.Add(wordDto);
+                responseDto.Add((QueryWordResponseDto)word);
             }
 
             return Ok(responseDto);
