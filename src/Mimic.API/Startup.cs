@@ -7,12 +7,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.OpenApi.Models;
-using Mimic.Application.Interfaces;
-using Mimic.Application.Services;
 using Mimic.Infra.Data.DataContext;
-using Mimic.Infra.Data.Interfaces;
-using Mimic.Infra.Data.Repositories;
 using Mimic.WebApi.Helpers.Swagger;
+using Mimic.WebApi.Middlewares;
 using System.IO;
 using System.Linq;
 
@@ -29,6 +26,8 @@ namespace Mimic.WebApi
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.ConfigureApllicationServices(Configuration);
+
             services.AddOptions();
 
             services.Configure<MimicApiSettings>(Configuration);
@@ -48,9 +47,6 @@ namespace Mimic.WebApi
             var caminhoProjeto = PlatformServices.Default.Application.ApplicationBasePath;
             var nomeProjeto = $"{PlatformServices.Default.Application.ApplicationName}.xml";
             var caminhoArquivo = Path.Combine(caminhoProjeto, nomeProjeto);
-
-            services.AddScoped<IWordRepository, WordRepository>();
-            services.AddScoped<IWordService, WordService>();
 
             if (settings.SwaggerEnabled)
             {

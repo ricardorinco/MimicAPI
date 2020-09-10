@@ -27,6 +27,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mimic.Application", "src\Mi
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{72D43EE9-5E19-4BB9-A0F2-B21E56705884}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mimic.Infra.CrossCutting", "src\Mimic.Infra.CrossCutting\Mimic.Infra.CrossCutting.csproj", "{71021944-6618-498E-8318-81CA157CC60D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +55,10 @@ Global
 		{72D43EE9-5E19-4BB9-A0F2-B21E56705884}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72D43EE9-5E19-4BB9-A0F2-B21E56705884}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72D43EE9-5E19-4BB9-A0F2-B21E56705884}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71021944-6618-498E-8318-81CA157CC60D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71021944-6618-498E-8318-81CA157CC60D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71021944-6618-498E-8318-81CA157CC60D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71021944-6618-498E-8318-81CA157CC60D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -62,6 +68,7 @@ Global
 		{1BCB17A5-F791-40E0-AF9C-86D0D93799B1} = {4EE781E6-2A1A-49FB-B087-17E6937B655D}
 		{7180D677-D545-440B-9C0B-2B287DB5739A} = {AA2221AC-9B9A-4701-ABA0-4D2EAE7DC076}
 		{49A6FD38-03E2-4D9A-9A44-14AD472D0E33} = {7E8CB57F-0E87-4387-9E5B-2CF4C1C54810}
+		{71021944-6618-498E-8318-81CA157CC60D} = {AA2221AC-9B9A-4701-ABA0-4D2EAE7DC076}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6D16E90D-5DDD-429F-AC12-F90380F38B04}
