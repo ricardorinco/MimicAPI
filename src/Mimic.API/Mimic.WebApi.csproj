@@ -32,7 +32,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Mimic.Application\Mimic.Application.csproj" />
-    <ProjectReference Include="..\Mimic.Domain\Mimic.Domain.csproj" />
     <ProjectReference Include="..\Mimic.Infra.CrossCutting\Mimic.Infra.CrossCutting.csproj" />
     <ProjectReference Include="..\Mimic.Infra.Data\Mimic.Infra.Data.csproj" />
   </ItemGroup>

@@ -7,7 +7,7 @@ using Mimic.Infra.Data.Repositories;
 
 namespace Mimic.Infra.CrossCutting.NativeInjector
 {
-    public static class NativeInjectorConfig
+    public static class NativeInjector
     {
         public static IServiceCollection RegisterServices(this IServiceCollection services, IConfiguration configuration)
         {
