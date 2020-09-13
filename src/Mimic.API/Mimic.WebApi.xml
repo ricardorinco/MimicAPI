@@ -98,6 +98,39 @@
             <param name="dto">Objeto de UpdateWordRequestDto</param>
             <returns>Objeto de UpdateWordDto</returns>
         </member>
+        <member name="T:Mimic.WebApi.Middlewares.ApiVersioning">
+            <summary>
+            Implementação do serviço de versionamento de api
+            </summary>
+        </member>
+        <member name="M:Mimic.WebApi.Middlewares.ApiVersioning.AddApiVersioningServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Adiciona o leitor de versionamento de api ao serviço e configura as versões
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Mimic.WebApi.Middlewares.Swagger">
+            <summary>
+            Implementação do serviço de gerador do Swagger
+            </summary>
+        </member>
+        <member name="M:Mimic.WebApi.Middlewares.Swagger.AddSwaggerServices(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Adiciona o gerador do Swagger ao serviço definindo um ou mais documentos swagger
+            </summary>
+            <param name="services">IServiceCollection</param>
+            <param name="configuration">IConfiguration</param>
+            <returns></returns>
+        </member>
+        <member name="M:Mimic.WebApi.Middlewares.Swagger.AddSwaggerApllication(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Adiciona o gerador do Swagger à aplicação definindo um ou mais documentos swagger
+            </summary>
+            <param name="app">IApplicationBuilder</param>
+            <param name="configuration">IConfiguration</param>
+            <returns></returns>
+        </member>
         <member name="T:Mimic.WebApi.MimicApiSettings">
             <summary>
             Configurações da aplicação

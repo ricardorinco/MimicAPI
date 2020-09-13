@@ -2,49 +2,47 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 namespace Mimic.WebApi
 {
+    /// <summary>
+    /// Implementações iniciais da aplicação
+    /// </summary>
     public class Startup
     {
+        /// <summary>
+        /// IConfiguration
+        /// </summary>
         public IConfiguration Configuration { get; }
 
+        /// <summary>
+        /// Construtor da classe
+        /// </summary>
+        /// <param name="configuration">Implementação de IConfiguration</param>
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
+        /// <summary>
+        /// Realiza as configurações dos middlewares no serviço
+        /// </summary>
+        /// <param name="services">IServiceCollection</param>
         public void ConfigureServices(IServiceCollection services)
         {
             services.ConfigureApllicationServices(Configuration);
-
-            services.AddOptions();
-            services.AddControllers();
         }
 
+        /// <summary>
+        /// Realiza as configurações dos middlewares na aplicação
+        /// </summary>
+        /// <param name="app">IApplicationBuilder</param>
+        /// <param name="env">IWebHostEnvironment</param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.ConfigureApllication(Configuration);
+            app.ConfigureApllication(Configuration, env);
 
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseHsts();
-            }
-
-            app.UseHttpsRedirection();
-            app.UseRouting();
-            app.UseAuthorization();
-            app.UseStatusCodePages();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            
         }
     }
 }

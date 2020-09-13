@@ -9,8 +9,17 @@ using System.Linq;
 
 namespace Mimic.WebApi.Middlewares
 {
+    /// <summary>
+    /// Implementação do serviço de gerador do Swagger
+    /// </summary>
     public static class Swagger
     {
+        /// <summary>
+        /// Adiciona o gerador do Swagger ao serviço definindo um ou mais documentos swagger
+        /// </summary>
+        /// <param name="services">IServiceCollection</param>
+        /// <param name="configuration">IConfiguration</param>
+        /// <returns>IServiceCollection</returns>
         public static IServiceCollection AddSwaggerServices(this IServiceCollection services, IConfiguration configuration)
         {
             var settings = configuration.Get<MimicApiSettings>();
@@ -22,14 +31,14 @@ namespace Mimic.WebApi.Middlewares
 
             if (settings.SwaggerEnabled)
             {
-                services.AddSwaggerGen(cfg =>
+                services.AddSwaggerGen(options =>
                 {
-                    cfg.ResolveConflictingActions(apiDescription => apiDescription.First());
-                    cfg.SwaggerDoc("v2", new OpenApiInfo { Title = "Mimic API", Version = "v2" });
-                    cfg.SwaggerDoc("v1.1", new OpenApiInfo { Title = "Mimic API", Version = "v1.1" });
-                    cfg.SwaggerDoc("v1", new OpenApiInfo { Title = "Mimic API", Version = "v1" });
-                    cfg.IncludeXmlComments(xmlCommentsPath);
-                    cfg.DocInclusionPredicate((docName, apiDesc) =>
+                    options.ResolveConflictingActions(apiDescription => apiDescription.First());
+                    options.SwaggerDoc("v2", new OpenApiInfo { Title = "Mimic API", Version = "v2" });
+                    options.SwaggerDoc("v1.1", new OpenApiInfo { Title = "Mimic API", Version = "v1.1" });
+                    options.SwaggerDoc("v1", new OpenApiInfo { Title = "Mimic API", Version = "v1" });
+                    options.IncludeXmlComments(xmlCommentsPath);
+                    options.DocInclusionPredicate((docName, apiDesc) =>
                     {
                         var actionApiVersionModel = apiDesc.ActionDescriptor?.GetApiVersion();
                         if (actionApiVersionModel == null)
@@ -44,14 +53,20 @@ namespace Mimic.WebApi.Middlewares
 
                         return actionApiVersionModel.ImplementedApiVersions.Any(v => $"v{v}" == docName);
                     });
-                    cfg.OperationFilter<RemoveVersionParameterFilter>();
-                    cfg.DocumentFilter<ReplaceVersionWithExactValueInPathFilter>();
+                    options.OperationFilter<RemoveVersionParameterFilter>();
+                    options.DocumentFilter<ReplaceVersionWithExactValueInPathFilter>();
                 });
             }
 
             return services;
         }
 
+        /// <summary>
+        /// Adiciona o gerador do Swagger à aplicação definindo um ou mais documentos swagger
+        /// </summary>
+        /// <param name="app">IApplicationBuilder</param>
+        /// <param name="configuration">IConfiguration</param>
+        /// <returns>IApplicationBuilder</returns>
         public static IApplicationBuilder AddSwaggerApllication(this IApplicationBuilder app, IConfiguration configuration)
         {
             var settings = configuration.Get<MimicApiSettings>();

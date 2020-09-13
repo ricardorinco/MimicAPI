@@ -5,8 +5,16 @@ using System.Linq;
 
 namespace Mimic.WebApi.Helpers.Swagger
 {
+    /// <summary>
+    /// Classe de extensão para obter o número do versionamento da api
+    /// </summary>
     public static class ActionDescriptorExtensions
     {
+        /// <summary>
+        /// Obtêm o número de versionamento da api
+        /// </summary>
+        /// <param name="actionDescriptor">ActionDescriptor</param>
+        /// <returns>ApiVersionModel</returns>
         public static ApiVersionModel GetApiVersion(this ActionDescriptor actionDescriptor)
         {
             return actionDescriptor?.Properties

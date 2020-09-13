@@ -10,6 +10,6 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Stage
       - ConnectionStrings__SQLite=Data Source=Mimic.db
-      - SwaggerEnabled=false
+      - SwaggerEnabled=true
     ports:
       - "443:80"

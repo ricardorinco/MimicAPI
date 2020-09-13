@@ -37,6 +37,7 @@ namespace Mimic.WebApi.V2.Controllers
         [HttpGet("", Name = "GetAllBySearch")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [MapToApiVersion("2")]
         public async Task<IActionResult> GetAllBySearch([FromQuery] QueryWordRequestDto requestDto)
         {
             var ruleDto = WordMappers.QueryWordequestDtoToQueryWordDto(requestDto);

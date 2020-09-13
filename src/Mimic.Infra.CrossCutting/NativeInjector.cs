@@ -9,7 +9,7 @@ namespace Mimic.Infra.CrossCutting.NativeInjector
 {
     public static class NativeInjector
     {
-        public static IServiceCollection RegisterServices(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddRegisterServices(this IServiceCollection services, IConfiguration configuration)
         {
             // Services
             services.AddScoped<IWordService, WordService>();
