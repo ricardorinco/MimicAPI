@@ -9,5 +9,10 @@
         /// Propriedade de exibição do Swagger
         /// </summary>
         public bool SwaggerEnabled { get; set; }
+
+        /// <summary>
+        /// Propriedade de Migration da base de dados
+        /// </summary>
+        public bool AutoMigrationEnabled { get; set; }
     }
 }

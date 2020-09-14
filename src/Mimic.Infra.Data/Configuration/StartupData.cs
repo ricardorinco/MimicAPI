@@ -7,6 +7,11 @@ namespace Mimic.Infra.Data.Configuration
 {
     public static class StartupData
     {
+        /// <summary>
+        /// Adiciona o contexto ao serviço
+        /// </summary>
+        /// <param name="services">IServiceCollection</param>
+        /// <returns>IServiceCollection</returns>
         public static IServiceCollection AddDataServices(this IServiceCollection services)
         {
             services.AddDbContext<MimicContext>();
@@ -14,7 +19,13 @@ namespace Mimic.Infra.Data.Configuration
             return services;
         }
 
-        public static IApplicationBuilder AddDataApllication(this IApplicationBuilder app)
+        /// <summary>
+        /// Adiciona o Service Scope à aplicação para prover o AutoMigration
+        /// </summary>
+        /// <param name="app">IApplicationBuilder</param>
+        /// <param name="autoMigrationEnabled">AutoMigration enabled</param>
+        /// <returns>IApplicationBuilder</returns>
+        public static IApplicationBuilder AddDataApllication(this IApplicationBuilder app, bool autoMigrationEnabled)
         {
             using (
                 var serviceScope = app.ApplicationServices

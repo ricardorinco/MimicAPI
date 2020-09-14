@@ -22,12 +22,14 @@ namespace Mimic.WebApi
         /// <returns>IServiceCollection</returns>
         public static IServiceCollection ConfigureApllicationServices(this IServiceCollection services, IConfiguration configuration)
         {
+            var settings = GetSettings(configuration);
+
             services
                 .AddRegisterServices(configuration)
                 .AddSettingesServices(configuration)
                 .AddCorsServices()
                 .AddApiVersioningServices()
-                .AddSwaggerServices(configuration)
+                .AddSwaggerServices(settings.SwaggerEnabled)
                 .AddDataServices()
                 .AddOptions()
                 .AddResponseCompression()
@@ -45,6 +47,8 @@ namespace Mimic.WebApi
         /// <returns>IApplicationBuilder</returns>
         public static IApplicationBuilder ConfigureApllication(this IApplicationBuilder app, IConfiguration configuration, IWebHostEnvironment env)
         {
+            var settings = GetSettings(configuration);
+
             app
                 .AddCorsApllication()
                 .UseHttpsRedirection()
@@ -52,8 +56,8 @@ namespace Mimic.WebApi
                 .UseEndpoints(endpoints => endpoints.MapControllers())
                 .UseAuthorization()
                 .UseStatusCodePages()
-                .AddDataApllication()
-                .AddSwaggerApllication(configuration)
+                .AddDataApllication(settings.AutoMigrationEnabled)
+                .AddSwaggerApllication(settings.SwaggerEnabled)
                 .UseResponseCompression();
 
             if (env.IsDevelopment())
@@ -66,6 +70,11 @@ namespace Mimic.WebApi
             }
 
             return app;
+        }
+
+        private static MimicApiSettings GetSettings(IConfiguration configuration)
+        {
+            return configuration.Get<MimicApiSettings>();
         }
     }
 }
